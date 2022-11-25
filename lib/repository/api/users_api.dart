@@ -7,13 +7,13 @@ import 'package:cafeysadmin/repository/pagination_response.dart';
 import 'package:cafeysadmin/repository/repository.dart';
 import 'package:cafeysadmin/util/app_strings.dart';
 
-class ProductsApi {
-  static Future<ApiResponse<PaginationResponse<Entity>>> listProducts({required int page, required int offset}) async {
+class UsersApi {
+  static Future<ApiResponse<PaginationResponse<Entity>>> listUsers({required int page, required int offset}) async {
     var paramsRequest = <String, dynamic>{};
     paramsRequest["description_html"] = 1;
     paramsRequest["offset"] = offset;
 
-    RequestResult result = await Repository.getRequest(ApiProducts.list, params: paramsRequest);
+    RequestResult result = await Repository.getRequest(ApiUser.list, params: paramsRequest);
 
     switch (result.status) {
       case RequestResultStatus.success:

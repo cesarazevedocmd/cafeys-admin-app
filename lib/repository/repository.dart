@@ -237,8 +237,6 @@ class Repository {
     }
     Map<String, dynamic> paramsTemp = params ?? <String, dynamic>{};
     paramsTemp["format"] = "json";
-    paramsTemp["chave_api"] = Api.apiKey;
-    paramsTemp["chave_aplicacao"] = Api.appKey;
 
     return "?${Uri(queryParameters: paramsTemp).query}";
   }
