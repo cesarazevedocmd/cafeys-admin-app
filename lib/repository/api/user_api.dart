@@ -21,8 +21,8 @@ class UserApi {
     switch (result.status) {
       case RequestResultStatus.success:
         var jsonResult = json.decode(result.jsonData ?? "{}") as Map<String, dynamic>;
-        List<User> admins = jsonResult["items"].map<User>((e) => User.fromJson(e)).toList();
-        var pagination = CustomPaginationResponse.fromJson(jsonResult, admins);
+        List<User> users = jsonResult["items"]?.map<User>((e) => User.fromJson(e)).toList() ?? [];
+        var pagination = CustomPaginationResponse.fromJson(jsonResult, users);
 
         return ApiResponse.success(pagination);
       case RequestResultStatus.error:

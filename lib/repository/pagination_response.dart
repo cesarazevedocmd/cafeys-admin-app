@@ -8,9 +8,8 @@ class CustomPaginationResponse<T extends Entity> {
 
   CustomPaginationResponse({this.currentPage = 0, this.items, this.totalItems = 0, this.totalPages = 0});
 
-  CustomPaginationResponse.fromJson(Map<String, dynamic> json, List<T> items) {
-    this.currentPage = (json['currentPage'] + 1);
-    this.items = items;
+  CustomPaginationResponse.fromJson(Map<String, dynamic> json, List<T> this.items) {
+    this.currentPage = json['currentPage'];
     this.totalItems = json['totalItems'];
     this.totalPages = json['totalPages'];
   }

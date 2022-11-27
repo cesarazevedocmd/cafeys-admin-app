@@ -21,7 +21,7 @@ class AdminApi {
     switch (result.status) {
       case RequestResultStatus.success:
         var jsonResult = json.decode(result.jsonData ?? "{}") as Map<String, dynamic>;
-        List<Admin> admins = jsonResult["items"].map<Admin>((e) => Admin.fromJson(e)).toList();
+        List<Admin> admins = jsonResult["items"]?.map<Admin>((e) => Admin.fromJson(e)).toList() ?? [];
         var pagination = CustomPaginationResponse.fromJson(jsonResult, admins);
 
         return ApiResponse.success(pagination);

@@ -1,17 +1,20 @@
 import 'package:cafeysadmin/repository/interface/entity.dart';
 
 class Admin extends Entity {
+  String? id;
   String? name;
   String? email;
   AdminType? type;
 
   Admin({
+    this.id,
     this.name,
     this.email,
     this.type,
   });
 
   Admin.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
     name = json['name'];
     email = json['email'];
     type = getType(json['type']);
@@ -20,6 +23,7 @@ class Admin extends Entity {
   @override
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
     data['name'] = name;
     data['email'] = email;
     data['type'] = getValueByType(type);

@@ -1,14 +1,14 @@
 import 'package:cafeysadmin/repository/interface/entity.dart';
 
-class NewUser extends Entity {
+class UserDTO extends Entity {
   String? name;
   String? email;
   String? password;
   String? passwordConfirm;
-  String? accessStart;
-  String? accessEnd;
+  DateTime? accessStart;
+  DateTime? accessEnd;
 
-  NewUser({
+  UserDTO({
     this.name,
     this.email,
     this.password,
@@ -17,13 +17,13 @@ class NewUser extends Entity {
     this.accessEnd,
   });
 
-  NewUser.fromJson(Map<String, dynamic> json) {
+  UserDTO.fromJson(Map<String, dynamic> json) {
     name = json['name'];
     email = json['email'];
     password = json['password'];
     passwordConfirm = json['passwordConfirm'];
-    accessStart = json['accessStart'];
-    accessEnd = json['accessEnd'];
+    accessStart = json['accessStart'] != null ? DateTime.tryParse(json['accessStart']) : null;
+    accessEnd = json['accessEnd'] != null ? DateTime.tryParse(json['accessEnd']) : null;
   }
 
   @override
@@ -33,8 +33,8 @@ class NewUser extends Entity {
     data['email'] = email;
     data['password'] = password;
     data['passwordConfirm'] = passwordConfirm;
-    data['accessStart'] = accessStart;
-    data['accessEnd'] = accessEnd;
+    data['accessStart'] = accessStart?.toIso8601String();
+    data['accessEnd'] = accessEnd?.toIso8601String();
     return data;
   }
 }

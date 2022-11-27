@@ -1,14 +1,14 @@
 import 'package:cafeysadmin/model/admin.dart';
 import 'package:cafeysadmin/repository/interface/entity.dart';
 
-class NewAdmin extends Entity {
+class AdminDTO extends Entity {
   String? name;
   String? email;
   String? password;
   String? passwordConfirm;
   AdminType? type;
 
-  NewAdmin({
+  AdminDTO({
     this.name,
     this.email,
     this.password,
@@ -16,7 +16,7 @@ class NewAdmin extends Entity {
     this.type,
   });
 
-  NewAdmin.fromJson(Map<String, dynamic> json) {
+  AdminDTO.fromJson(Map<String, dynamic> json) {
     name = json['name'];
     email = json['email'];
     password = json['password'];
