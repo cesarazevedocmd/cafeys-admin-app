@@ -25,10 +25,12 @@ class AdminApi {
   static Future<ApiResponse<CustomPaginationResponse<Admin>>> listAdmins({
     required int page,
     required int size,
+    String query = "",
   }) async {
     var paramsRequest = <String, dynamic>{};
     paramsRequest["page"] = "$page";
     paramsRequest["size"] = "$size";
+    paramsRequest["query"] = query;
 
     RequestResult result = await Repository.getRequest(ApiAdmin.list, params: paramsRequest);
 

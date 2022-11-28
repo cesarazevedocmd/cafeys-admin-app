@@ -9,19 +9,19 @@ import 'package:cafeysadmin/util/app_strings.dart';
 class ListAdminsBloc extends BasicBloc<BlocResponse<CustomPaginationResponse<Admin>>> {
   int _requestPage = 0;
 
-  Future<BlocResponse<CustomPaginationResponse<Admin>>> listAdmins(String query) async {
+  Future<BlocResponse<CustomPaginationResponse<Admin>>> listAdmins({String query = ""}) async {
     _requestPage = 0;
-    return listMoreAdmins(query);
+    return listMoreAdmins(query: query);
   }
 
-  Future<BlocResponse<CustomPaginationResponse<Admin>>> listMoreAdmins(String query) async {
+  Future<BlocResponse<CustomPaginationResponse<Admin>>> listMoreAdmins({String query = ""}) async {
     try {
       bool connected = await Network.isConnected();
 
       if (connected) {
         add(BlocResponse.loading());
 
-        var response = await AdminApi.listAdmins(page: _requestPage, size: _requestPage * 20);
+        var response = await AdminApi.listAdmins(page: _requestPage, size: _requestPage * 20, query: query);
 
         if (response.success) {
           _requestPage += 1;

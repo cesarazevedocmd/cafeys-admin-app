@@ -25,10 +25,12 @@ class UserApi {
   static Future<ApiResponse<CustomPaginationResponse<User>>> listUsers({
     required int page,
     required int size,
+    String query = "",
   }) async {
     var paramsRequest = <String, dynamic>{};
     paramsRequest["page"] = "$page";
     paramsRequest["size"] = "$size";
+    paramsRequest["query"] = query;
 
     RequestResult result = await Repository.getRequest(ApiUser.list, params: paramsRequest);
 

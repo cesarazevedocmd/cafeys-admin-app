@@ -9,19 +9,19 @@ import 'package:cafeysadmin/util/app_strings.dart';
 class ListUsersBloc extends BasicBloc<BlocResponse<CustomPaginationResponse<User>>> {
   int _requestPage = 0;
 
-  Future<BlocResponse<CustomPaginationResponse<User>>> listUsers(String query) async {
+  Future<BlocResponse<CustomPaginationResponse<User>>> listUsers({String query = ""}) async {
     _requestPage = 0;
-    return listMoreUsers(query);
+    return listMoreUsers(query: query);
   }
 
-  Future<BlocResponse<CustomPaginationResponse<User>>> listMoreUsers(String query) async {
+  Future<BlocResponse<CustomPaginationResponse<User>>> listMoreUsers({String query = ""}) async {
     try {
       bool connected = await Network.isConnected();
 
       if (connected) {
         add(BlocResponse.loading());
 
-        var response = await UserApi.listUsers(page: _requestPage, size: _requestPage * 20);
+        var response = await UserApi.listUsers(page: _requestPage, size: _requestPage * 20, query: query);
 
         if (response.success) {
           _requestPage += 1;
