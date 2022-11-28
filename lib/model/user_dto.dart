@@ -1,6 +1,7 @@
 import 'package:cafeysadmin/repository/interface/entity.dart';
 
 class UserDTO extends Entity {
+  String? id;
   String? name;
   String? email;
   String? password;
@@ -9,6 +10,7 @@ class UserDTO extends Entity {
   DateTime? accessEnd;
 
   UserDTO({
+    this.id,
     this.name,
     this.email,
     this.password,
@@ -18,6 +20,7 @@ class UserDTO extends Entity {
   });
 
   UserDTO.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
     name = json['name'];
     email = json['email'];
     password = json['password'];
@@ -29,6 +32,7 @@ class UserDTO extends Entity {
   @override
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
     data['name'] = name;
     data['email'] = email;
     data['password'] = password;

@@ -12,4 +12,6 @@ class AppStrings {
   static const String statusNotFound = "Status não identificado";
 
   static const String noConnected = "Sem conexão";
+
+  static const String requestFailed = "Requisição Falhou";
 }

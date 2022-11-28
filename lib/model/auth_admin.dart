@@ -1,13 +1,13 @@
-class Auth {
+class AuthAdmin {
   String? login;
   String? password;
 
-  Auth({
+  AuthAdmin({
     this.login,
     this.password,
   });
 
-  Auth.fromJson(Map<String, dynamic> json) {
+  AuthAdmin.fromJson(Map<String, dynamic> json) {
     login = json['login'];
     password = json['password'];
   }
