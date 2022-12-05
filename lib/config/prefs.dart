@@ -28,7 +28,7 @@ class Prefs {
 
   static setString(String key, String value) async {
     var prefs = await _getPref();
-    prefs.setString(key, value ?? "");
+    prefs.setString(key, value);
   }
 
   static Future<double> getDouble(String key) async {

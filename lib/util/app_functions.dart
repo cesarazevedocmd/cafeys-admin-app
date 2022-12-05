@@ -1,4 +1,5 @@
 import 'package:cafeysadmin/util/app_strings.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class AppFunctions {
@@ -7,7 +8,9 @@ class AppFunctions {
       FocusScopeNode currentFocus = FocusScope.of(context);
       currentFocus.requestFocus(FocusNode());
     } catch (error) {
-      print("ERROR hideKeyboard");
+      if (kDebugMode) {
+        print("ERROR hideKeyboard");
+      }
     }
   }
 

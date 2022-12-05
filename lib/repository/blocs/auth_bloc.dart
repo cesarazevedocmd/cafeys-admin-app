@@ -9,6 +9,7 @@ import 'package:cafeysadmin/repository/api/auth_api.dart';
 import 'package:cafeysadmin/repository/blocs/basic_bloc.dart';
 import 'package:cafeysadmin/repository/blocs/bloc_response.dart';
 import 'package:cafeysadmin/util/app_strings.dart';
+import 'package:flutter/foundation.dart';
 
 class AuthBloc extends BasicBloc<BlocResponse<Admin>> {
   Future<BlocResponse<Admin>> auth(AuthAdmin login) async {
@@ -43,10 +44,12 @@ class AuthBloc extends BasicBloc<BlocResponse<Admin>> {
 
   Future<void> validateFirebaseToken(Admin user) async {
     try {
-      String? firebaseToken = await FirebaseMessaging.instance.getToken();
-      if (firebaseToken != null && firebaseToken.isNotEmpty) await AdminApi.setFirebaseToken(user.id, firebaseToken);
+      //String? firebaseToken = await FirebaseMessaging.instance.getToken();
+      //if (firebaseToken != null && firebaseToken.isNotEmpty) await AdminApi.setFirebaseToken(user.id, firebaseToken);
     } catch (ex) {
-      print("ERROR GET FIREBASE TOKEN: ${ex.toString()}");
+      if (kDebugMode) {
+        print("ERROR GET FIREBASE TOKEN: ${ex.toString()}");
+      }
     }
   }
 }
