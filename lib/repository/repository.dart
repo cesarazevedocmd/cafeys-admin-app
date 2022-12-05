@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:cafeysadmin/config/user_manager.dart';
 import 'package:cafeysadmin/repository/api/apis.dart';
 import 'package:cafeysadmin/util/app_strings.dart';
 import 'package:flutter/foundation.dart';
@@ -54,9 +55,15 @@ enum RequestResultStatus {
 }
 
 class Repository {
-  static Future<RequestResult> getRequest(String url, {Map<String, dynamic>? params, bool sendToken = true}) async {
+  static Future<RequestResult> getRequest(
+    String url, {
+    Map<String, dynamic>? params,
+    bool sendToken = true,
+  }) async {
     try {
-      String queryParamsString = _generateQueryParam(params: params);
+      String queryParamsString = "";
+
+      if (params != null) queryParamsString = "?${Uri(queryParameters: params).query}";
 
       Uri uri = Uri.parse("${Api.host}$url$queryParamsString");
 
@@ -73,10 +80,16 @@ class Repository {
     }
   }
 
-  static Future<RequestResult> deleteRequest(String url,
-      {Map<String, String>? params, Map? body, bool sendToken = true}) async {
+  static Future<RequestResult> deleteRequest(
+    String url, {
+    Map<String, String>? params,
+    Map? body,
+    bool sendToken = true,
+  }) async {
     try {
-      String queryParamsString = _generateQueryParam(params: params);
+      String queryParamsString = "";
+
+      if (params != null) queryParamsString = "?${Uri(queryParameters: params).query}";
 
       Uri uri = Uri.parse("${Api.host}$url$queryParamsString");
 
@@ -93,7 +106,11 @@ class Repository {
     }
   }
 
-  static Future<RequestResult> postRequest(String url, Map body, {bool sendToken = true}) async {
+  static Future<RequestResult> postRequest(
+    String url,
+    Map body, {
+    bool sendToken = true,
+  }) async {
     try {
       Uri uri = Uri.parse("${Api.host}$url");
 
@@ -112,10 +129,16 @@ class Repository {
     }
   }
 
-  static Future<RequestResult> putRequest(String url,
-      {Map? body, Map<String, dynamic>? params, bool sendToken = true}) async {
+  static Future<RequestResult> putRequest(
+    String url, {
+    Map? body,
+    Map<String, dynamic>? params,
+    bool sendToken = true,
+  }) async {
     try {
-      String queryParamsString = _generateQueryParam(params: params);
+      String queryParamsString = "";
+
+      if (params != null) queryParamsString = "?${Uri(queryParameters: params).query}";
 
       Uri uri = Uri.parse("${Api.host}$url$queryParamsString");
 
@@ -229,7 +252,7 @@ class Repository {
     }
   }*/
 
-  static String _generateQueryParam({Map<String, dynamic>? params}) {
+  /*static String _generateQueryParam({Map<String, dynamic>? params}) {
     if (params != null) {
       for (var key in params.keys) {
         params[key] = params[key].toString();
@@ -239,7 +262,7 @@ class Repository {
     paramsTemp["format"] = "json";
 
     return "?${Uri(queryParameters: paramsTemp).query}";
-  }
+  }*/
 
   static RequestResult _convertResponse(http.Response response) {
     switch (response.statusCode) {
@@ -253,20 +276,19 @@ class Repository {
   }
 
   static Future<Map<String, String>> _getHeader(bool sendToken) async {
-    // TODO FIX UserManager.getToken()
-    final token = ""; //await UserManager.getToken();
+    final token = await UserManager.getToken();
     var headers = {
       "Content-Type": "application/json; charset=utf-8",
+      "pub-key": Api.hostPublicValue,
     };
     if (sendToken == true) {
-      //headers["Authorization"] = "Bearer $token";
+      headers["Authorization"] = "Bearer $token";
     }
     return headers;
   }
 
-  static Future<String> _getToken() async {
-    // TODO FIX UserManager.getToken()
-    final token = ""; //await UserManager.getToken();
+  static Future<String> _getBearerToken() async {
+    final token = await UserManager.getToken();
     return "Bearer $token";
   }
 

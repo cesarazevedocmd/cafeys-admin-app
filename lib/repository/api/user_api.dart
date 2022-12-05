@@ -10,7 +10,7 @@ import 'package:cafeysadmin/util/app_strings.dart';
 
 class UserApi {
   static Future<ApiResponse<bool>> add(UserDTO dto) async {
-    RequestResult result = await Repository.postRequest(ApiUser.manage, dto.toJson());
+    RequestResult result = await Repository.postRequest(ApiUser.signUp, dto.toJson());
 
     switch (result.status) {
       case RequestResultStatus.success:
