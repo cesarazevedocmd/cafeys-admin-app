@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:cafeysadmin/config/user_manager.dart';
+import 'package:cafeysadmin/config/admin_manager.dart';
 import 'package:cafeysadmin/repository/api/apis.dart';
 import 'package:cafeysadmin/util/app_strings.dart';
 import 'package:flutter/foundation.dart';
@@ -276,7 +276,7 @@ class Repository {
   }
 
   static Future<Map<String, String>> _getHeader(bool sendToken) async {
-    final token = await UserManager.getToken();
+    final token = await AdminManager.getToken();
     var headers = {
       "Content-Type": "application/json; charset=utf-8",
       "pub-key": Api.hostPublicValue,
@@ -288,7 +288,7 @@ class Repository {
   }
 
   static Future<String> _getBearerToken() async {
-    final token = await UserManager.getToken();
+    final token = await AdminManager.getToken();
     return "Bearer $token";
   }
 

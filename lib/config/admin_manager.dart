@@ -1,24 +1,24 @@
 import 'dart:convert';
 
 import 'package:cafeysadmin/config/prefs.dart';
-import 'package:cafeysadmin/model/user.dart';
+import 'package:cafeysadmin/model/admin.dart';
 
-class UserManager {
-  static const String _userObjectTag = "user_object";
+class AdminManager {
+  static const String _adminObjectTag = "admin_object";
 
-  static Future<User?> getUser() async {
-    String jsonUser = await Prefs.getString(_userObjectTag);
-    if (jsonUser.isNotEmpty) return User.fromJson(json.decode(jsonUser));
+  static Future<Admin?> getAdmin() async {
+    String jsonAdmin = await Prefs.getString(_adminObjectTag);
+    if (jsonAdmin.isNotEmpty) return Admin.fromJson(json.decode(jsonAdmin));
     return null;
   }
 
-  static setUser(User? user) async {
-    if (user != null) {
-      var userEncoded = json.encode(user.toJson());
-      await Prefs.setString(_userObjectTag, userEncoded);
-      await setEmail(user.email);
+  static setAdmin(Admin? admin) async {
+    if (admin != null) {
+      var adminEncoded = json.encode(admin.toJson());
+      await Prefs.setString(_adminObjectTag, adminEncoded);
+      await setEmail(admin.email);
     } else {
-      Prefs.setString(_userObjectTag, "");
+      Prefs.setString(_adminObjectTag, "");
     }
   }
 
@@ -53,8 +53,8 @@ class UserManager {
     Prefs.setString("token", token);
   }
 
-  static removeUser() async {
-    await setUser(null);
+  static removeAdmin() async {
+    await setAdmin(null);
   }
 
   static removeToken() async {
