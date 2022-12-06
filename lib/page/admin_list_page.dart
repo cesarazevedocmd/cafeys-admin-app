@@ -1,13 +1,12 @@
-import 'package:cafeysadmin/config/admin_manager.dart';
+import 'package:cafeysadmin/config/nav.dart';
 import 'package:cafeysadmin/custom_views/admin_list_item_card_view.dart';
 import 'package:cafeysadmin/custom_views/app_search_view.dart';
-import 'package:cafeysadmin/custom_views/app_title_view.dart';
 import 'package:cafeysadmin/model/admin.dart';
+import 'package:cafeysadmin/page/admin_form_page.dart';
 import 'package:cafeysadmin/repository/blocs/admin/list_admin_bloc.dart';
 import 'package:cafeysadmin/repository/blocs/bloc_response.dart';
 import 'package:cafeysadmin/repository/pagination_response.dart';
 import 'package:cafeysadmin/util/app_assets.dart';
-import 'package:cafeysadmin/util/app_colors.dart';
 import 'package:cafeysadmin/util/app_constants.dart';
 import 'package:cafeysadmin/util/app_functions.dart';
 import 'package:cafeysadmin/util/app_space.dart';
@@ -141,6 +140,10 @@ class _AdminListPageState extends State<AdminListPage> {
           _loadingMoreView(),
         ],
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => openAdminForm(),
+        child: const Icon(Icons.person_add_outlined),
+      ),
     );
   }
 
@@ -195,7 +198,9 @@ class _AdminListPageState extends State<AdminListPage> {
     return AppWidget.empty();
   }
 
-  void _itemClick(Admin admin) async {}
+  void _itemClick(Admin admin) {
+    openAdminForm(admin: admin);
+  }
 
   void swapSearchViewVisibility() => _appSearchView?.swapVisibility();
 
@@ -204,5 +209,12 @@ class _AdminListPageState extends State<AdminListPage> {
     super.dispose();
     _scrollController.dispose();
     listAdminBloc?.dispose();
+  }
+
+  openAdminForm({Admin? admin}) async {
+    var pushResult = await push(context, AdminFormPage(admin: admin));
+    if (pushResult != null && pushResult == true) {
+      _fetch();
+    }
   }
 }

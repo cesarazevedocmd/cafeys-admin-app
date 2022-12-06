@@ -1,4 +1,3 @@
-import 'package:cafeysadmin/util/app_strings.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -12,13 +11,5 @@ class AppFunctions {
         print("ERROR hideKeyboard");
       }
     }
-  }
-
-  static String? validatorEmptyField(String? value) {
-    String valueString = value ?? "";
-    if (valueString.isEmpty) {
-      return AppStrings.alertFieldCantBeEmpty;
-    }
-    return null;
   }
 }

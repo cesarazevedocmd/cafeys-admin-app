@@ -1,4 +1,4 @@
-import 'package:cafeysadmin/model/admin.dart';
+import 'package:cafeysadmin/model/enums/access_type.dart';
 import 'package:cafeysadmin/repository/interface/entity.dart';
 
 class AdminDTO extends Entity {
@@ -7,7 +7,7 @@ class AdminDTO extends Entity {
   String? email;
   String? password;
   String? passwordConfirm;
-  AdminType? type;
+  AccessType? accessType;
 
   AdminDTO({
     this.id,
@@ -15,7 +15,7 @@ class AdminDTO extends Entity {
     this.email,
     this.password,
     this.passwordConfirm,
-    this.type,
+    this.accessType,
   });
 
   AdminDTO.fromJson(Map<String, dynamic> json) {
@@ -24,7 +24,7 @@ class AdminDTO extends Entity {
     email = json['email'];
     password = json['password'];
     passwordConfirm = json['passwordConfirm'];
-    type = getType(json['type']);
+    accessType = accessTypeByValue(json['accessType']);
   }
 
   @override
@@ -35,7 +35,7 @@ class AdminDTO extends Entity {
     data['email'] = email;
     data['password'] = password;
     data['passwordConfirm'] = passwordConfirm;
-    data['type'] = getValueByType(type);
+    data['accessType'] = accessType?.value;
     return data;
   }
 }

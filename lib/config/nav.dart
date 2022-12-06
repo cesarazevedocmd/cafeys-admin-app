@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 
-void pop(BuildContext context) {
-  Navigator.pop(context);
+void pop(BuildContext context, {dynamic result}) {
+  if (result != null) {
+    Navigator.pop(context, result = result);
+  } else {
+    Navigator.pop(context);
+  }
 }
 
 Future push(BuildContext context, Widget page, {bool replace = false}) {

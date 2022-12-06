@@ -40,6 +40,7 @@ dependencies:
   connectivity_plus: ^2.3.6+1
   firebase_remote_config: ^3.0.6
   http: ^0.13.5
+  dropdown_search: ^5.0.2
 
 dev_dependencies:
   flutter_test:

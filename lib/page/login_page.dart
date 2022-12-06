@@ -8,10 +8,10 @@ import 'package:cafeysadmin/repository/blocs/auth/auth_bloc.dart';
 import 'package:cafeysadmin/repository/blocs/bloc_response.dart';
 import 'package:cafeysadmin/util/app_assets.dart';
 import 'package:cafeysadmin/util/app_constants.dart';
-import 'package:cafeysadmin/util/app_functions.dart';
 import 'package:cafeysadmin/util/app_space.dart';
 import 'package:cafeysadmin/util/app_strings.dart';
 import 'package:cafeysadmin/util/app_toast.dart';
+import 'package:cafeysadmin/util/app_validation.dart';
 import 'package:cafeysadmin/util/app_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -126,7 +126,7 @@ class _LoginPageState extends State<LoginPage> {
           controller: controllerLogin,
           borderType: AppTextFieldBorderType.bottom,
           label: AppStrings.loginLabel,
-          validator: AppFunctions.validatorEmptyField,
+          validator: AppValidation.validatorEmptyField,
         ),
         AppSpace.vertical(AppConstants.VALUE_10),
         AppTextFieldView(
@@ -143,8 +143,8 @@ class _LoginPageState extends State<LoginPage> {
               });
             },
           ),
-          validator: AppFunctions.validatorEmptyField,
-        )
+          validator: AppValidation.validatorEmptyField,
+        ),
       ],
     );
   }

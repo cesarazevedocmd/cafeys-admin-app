@@ -1,5 +1,4 @@
 class AppConstants {
-
   AppConstants._();
 
   static const double borderRadius = 2.0;
@@ -67,6 +66,7 @@ class AppConstants {
   static const double VALUE_MAX = double.infinity;
 
   static const int DEFAULT_PAGE_SIZE = 100;
+  static const int PASSWORD_MIN_LENGTH = 6;
 }
 
 class FontSize {
