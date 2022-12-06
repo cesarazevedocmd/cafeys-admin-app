@@ -134,6 +134,12 @@ class _AdminListPageState extends State<AdminListPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(AppStrings.registeredAdminList),
+        actions: [
+          IconButton(
+            onPressed: () => swapSearchViewVisibility(),
+            icon: const Icon(Icons.search),
+          ),
+        ],
       ),
       body: Column(
         children: [
@@ -160,6 +166,7 @@ class _AdminListPageState extends State<AdminListPage> {
 
   void _clearSearchField() {
     _searchController.text = "";
+    _fetch();
   }
 
   Widget _getContent() {

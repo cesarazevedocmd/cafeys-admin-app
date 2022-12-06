@@ -52,6 +52,9 @@ class _AppSearchViewState extends State<AppSearchView> {
                         controller: widget.controller,
                         hintText: widget.hint,
                         prefixIcon: const Icon(CupertinoIcons.search),
+                        onSubmit: (_) => widget.okClick(),
+                        actionEnterClick: TextInputAction.done,
+                        borderType: AppTextFieldBorderType.none,
                         suffixIcon: IconButton(
                           onPressed: () => widget.clearClick(),
                           icon: const Icon(CupertinoIcons.clear),

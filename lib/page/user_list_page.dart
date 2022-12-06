@@ -134,6 +134,12 @@ class _UserListPageState extends State<UserListPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(AppStrings.registeredUsersList),
+        actions: [
+          IconButton(
+            onPressed: () => swapSearchViewVisibility(),
+            icon: const Icon(Icons.search),
+          ),
+        ],
       ),
       body: Column(
         children: [
@@ -160,6 +166,7 @@ class _UserListPageState extends State<UserListPage> {
 
   void _clearSearchField() {
     _searchController.text = "";
+    _fetch();
   }
 
   Widget _getContent() {

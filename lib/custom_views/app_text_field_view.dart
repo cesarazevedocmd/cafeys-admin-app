@@ -22,6 +22,7 @@ class AppTextFieldView extends StatelessWidget {
   final TextInputAction actionEnterClick;
   final bool isPassword;
   final bool enable;
+  final ValueChanged<String>? onSubmit;
 
   const AppTextFieldView({
     required this.controller,
@@ -44,6 +45,7 @@ class AppTextFieldView extends StatelessWidget {
     this.maxLines,
     this.isPassword = false,
     this.enable = true,
+    this.onSubmit,
     Key? key,
   }) : super(key: key);
 
@@ -62,6 +64,7 @@ class AppTextFieldView extends StatelessWidget {
       obscureText: isPassword,
       decoration: getDecoration(),
       enabled: enable,
+      onFieldSubmitted: onSubmit,
     );
   }
 
