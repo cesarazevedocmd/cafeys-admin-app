@@ -6,7 +6,7 @@ import 'package:cafeysadmin/repository/blocs/bloc_response.dart';
 import 'package:cafeysadmin/repository/pagination_response.dart';
 import 'package:cafeysadmin/util/app_strings.dart';
 
-class ListAdminsBloc extends BasicBloc<BlocResponse<CustomPaginationResponse<Admin>>> {
+class ListAdminBloc extends BasicBloc<BlocResponse<CustomPaginationResponse<Admin>>> {
   int _requestPage = 0;
 
   Future<BlocResponse<CustomPaginationResponse<Admin>>> listAdmins({String query = ""}) async {
