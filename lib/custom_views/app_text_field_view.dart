@@ -21,6 +21,7 @@ class AppTextFieldView extends StatelessWidget {
   final TextCapitalization capitalization;
   final TextInputAction actionEnterClick;
   final bool isPassword;
+  final bool enable;
 
   const AppTextFieldView({
     required this.controller,
@@ -42,6 +43,7 @@ class AppTextFieldView extends StatelessWidget {
     this.minLines,
     this.maxLines,
     this.isPassword = false,
+    this.enable = true,
     Key? key,
   }) : super(key: key);
 
@@ -59,6 +61,7 @@ class AppTextFieldView extends StatelessWidget {
       textInputAction: actionEnterClick,
       obscureText: isPassword,
       decoration: getDecoration(),
+      enabled: enable,
     );
   }
 

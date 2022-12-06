@@ -26,6 +26,7 @@ class AdminFormPage extends StatefulWidget {
 
 class _AdminFormPageState extends State<AdminFormPage> {
   final _formKey = GlobalKey<FormState>();
+  bool loadedFields = false;
   TextEditingController controllerName = TextEditingController();
   TextEditingController controllerEmail = TextEditingController();
   TextEditingController controllerPassword = TextEditingController();
@@ -99,7 +100,8 @@ class _AdminFormPageState extends State<AdminFormPage> {
               });
             },
           ),
-          validator: AppValidation.passwordMinimumCharacter,
+          validator: widget.admin != null ? null : AppValidation.passwordMinimumCharacter,
+          enable: widget.admin == null,
         ),
         AppSpace.vertical(AppConstants.VALUE_10),
         AppTextFieldView(
@@ -116,7 +118,8 @@ class _AdminFormPageState extends State<AdminFormPage> {
               });
             },
           ),
-          validator: _validateConfirmationPassword,
+          validator: widget.admin != null ? null : _validateConfirmationPassword,
+          enable: widget.admin == null,
         ),
         AppSpace.vertical(AppConstants.VALUE_10),
       ],
@@ -156,10 +159,11 @@ class _AdminFormPageState extends State<AdminFormPage> {
   }
 
   void loadFields(Admin? admin) {
-    if (admin != null) {
+    if (admin != null && !loadedFields) {
       controllerName.text = admin.name!;
       controllerEmail.text = admin.email!;
       selectedAccessType = admin.accessType;
+      loadedFields = true;
     }
   }
 
