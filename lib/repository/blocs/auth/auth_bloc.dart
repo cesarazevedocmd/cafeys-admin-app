@@ -3,7 +3,6 @@ import 'package:cafeysadmin/config/network.dart';
 import 'package:cafeysadmin/model/admin.dart';
 import 'package:cafeysadmin/model/auth_admin.dart';
 import 'package:cafeysadmin/model/token_admin.dart';
-import 'package:cafeysadmin/repository/api/admin_api.dart';
 import 'package:cafeysadmin/repository/api/api_response.dart';
 import 'package:cafeysadmin/repository/api/auth_api.dart';
 import 'package:cafeysadmin/repository/blocs/basic_bloc.dart';
@@ -12,7 +11,7 @@ import 'package:cafeysadmin/util/app_strings.dart';
 import 'package:flutter/foundation.dart';
 
 class AuthBloc extends BasicBloc<BlocResponse<Admin>> {
-  Future<BlocResponse<Admin>> auth(AuthAdmin login) async {
+  Future<BlocResponse<Admin>> fetch({required AuthAdmin login}) async {
     try {
       bool connected = await Network.isConnected();
 

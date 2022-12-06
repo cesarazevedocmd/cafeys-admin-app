@@ -1,6 +1,6 @@
 class Api {
-  static const String host = "/api";
-  static String hostPublicValue = "";
+  static String host = "http://192.168.1.9:8080/api";
+  static String hostPublicValue = "C4-@f3/Y5";
 }
 
 class ApiAuth {

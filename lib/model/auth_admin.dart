@@ -1,20 +1,20 @@
 class AuthAdmin {
-  String? login;
+  String? email;
   String? password;
 
   AuthAdmin({
-    this.login,
+    this.email,
     this.password,
   });
 
   AuthAdmin.fromJson(Map<String, dynamic> json) {
-    login = json['login'];
+    email = json['email'];
     password = json['password'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['login'] = login;
+    data['email'] = email;
     data['password'] = password;
     return data;
   }
