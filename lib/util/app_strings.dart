@@ -28,4 +28,16 @@ class AppStrings {
   static const String validatingAccess = "validando acesso...";
 
   static const String wait = "aguarde...";
+
+  static const String hello = "Olá";
+
+  static const String comma = ",";
+
+  static const String manageAdminUsersLabel = "Usuários Administradores";
+
+  static const String manageAdminUsersDescription = "Gerencie os usuários admistradores do sistema";
+
+  static const String manageBasicUsersLabel = "Usuários Cafeys App";
+
+  static const String manageBasicUsersDescription = "Gerencie os usuários que tem acesso ao Aplicativo de medição";
 }

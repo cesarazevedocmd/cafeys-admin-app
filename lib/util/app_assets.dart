@@ -26,6 +26,14 @@ class AppAssets {
   static String faceContour() {
     return "assets/images/face_contour.png";
   }
+
+  static String adminIcon() {
+    return "assets/images/admin_icon.png";
+  }
+
+  static String userIcon() {
+    return "assets/images/user_icon.png";
+  }
 }
 
 class Eyebrow {
