@@ -1,13 +1,10 @@
-import 'package:cafeysadmin/config/admin_manager.dart';
-import 'package:cafeysadmin/custom_views/admin_list_item_card_view.dart';
 import 'package:cafeysadmin/custom_views/app_search_view.dart';
-import 'package:cafeysadmin/custom_views/app_title_view.dart';
-import 'package:cafeysadmin/model/admin.dart';
-import 'package:cafeysadmin/repository/blocs/admin/list_admin_bloc.dart';
+import 'package:cafeysadmin/custom_views/user_list_item_card_view.dart';
+import 'package:cafeysadmin/model/user.dart';
 import 'package:cafeysadmin/repository/blocs/bloc_response.dart';
+import 'package:cafeysadmin/repository/blocs/user/list_user_bloc.dart';
 import 'package:cafeysadmin/repository/pagination_response.dart';
 import 'package:cafeysadmin/util/app_assets.dart';
-import 'package:cafeysadmin/util/app_colors.dart';
 import 'package:cafeysadmin/util/app_constants.dart';
 import 'package:cafeysadmin/util/app_functions.dart';
 import 'package:cafeysadmin/util/app_space.dart';
@@ -15,36 +12,36 @@ import 'package:cafeysadmin/util/app_strings.dart';
 import 'package:cafeysadmin/util/app_widget.dart';
 import 'package:flutter/material.dart';
 
-class AdminListPage extends StatefulWidget {
-  AdminListPage({Key? key}) : super(key: key);
+class UserListPage extends StatefulWidget {
+  UserListPage({Key? key}) : super(key: key);
 
-  final _AdminListPageState adminListPageState = _AdminListPageState();
+  final _UserListPageState userListPageState = _UserListPageState();
 
   @override
-  State<AdminListPage> createState() => adminListPageState;
+  State<UserListPage> createState() => userListPageState;
 
   void fetch() {
-    adminListPageState._fetch();
+    userListPageState._fetch();
   }
 
   void validateFetch() {
-    adminListPageState._validateFetch();
+    userListPageState._validateFetch();
   }
 
   void swapSearchViewVisibility() {
-    adminListPageState.swapSearchViewVisibility();
+    userListPageState.swapSearchViewVisibility();
   }
 }
 
-class _AdminListPageState extends State<AdminListPage> {
+class _UserListPageState extends State<UserListPage> {
   bool _loading = false;
   bool _loadingMore = false;
   bool _lastListLoaded = false;
   final ScrollController _scrollController = ScrollController();
   final TextEditingController _searchController = TextEditingController();
-  ListAdminBloc? listAdminBloc;
+  ListUserBloc? listUserBloc;
   AppSearchView? _appSearchView;
-  List<Admin> _items = [];
+  List<User> _items = [];
 
   @override
   void initState() {
@@ -55,7 +52,7 @@ class _AdminListPageState extends State<AdminListPage> {
   }
 
   _initBloc() {
-    listAdminBloc ??= ListAdminBloc();
+    listUserBloc ??= ListUserBloc();
   }
 
   void _initScrollController() {
@@ -73,7 +70,7 @@ class _AdminListPageState extends State<AdminListPage> {
     AppFunctions.hideKeyboard(context);
     _setLoadingFlag(true);
     setState(() => _items = []);
-    return listAdminBloc!.fetch(query: _searchController.text).then(
+    return listUserBloc!.fetch(query: _searchController.text).then(
       (response) {
         _setLoadingFlag(false);
         validateRequestResult(response);
@@ -88,7 +85,7 @@ class _AdminListPageState extends State<AdminListPage> {
   _fetchMore() {
     if (!_lastListLoaded) {
       _setLoadingMoreFlag(true);
-      return listAdminBloc!.fetchMore(query: _searchController.text).then(
+      return listUserBloc!.fetchMore(query: _searchController.text).then(
         (response) {
           _setLoadingMoreFlag(false);
           validateRequestResult(response);
@@ -105,7 +102,7 @@ class _AdminListPageState extends State<AdminListPage> {
     setState(() => _loadingMore = value);
   }
 
-  void validateRequestResult(BlocResponse<CustomPaginationResponse<Admin>> response) {
+  void validateRequestResult(BlocResponse<CustomPaginationResponse<User>> response) {
     setState(
       () {
         switch (response.status) {
@@ -176,7 +173,7 @@ class _AdminListPageState extends State<AdminListPage> {
         itemCount: _items.length,
         itemBuilder: (context, index) {
           var item = _items[index];
-          return AdminListItemCardView(item: item, itemClick: _itemClick);
+          return UserListItemCardView(item: item, itemClick: _itemClick);
         },
       ),
     );
@@ -195,7 +192,7 @@ class _AdminListPageState extends State<AdminListPage> {
     return AppWidget.empty();
   }
 
-  void _itemClick(Admin admin) async {}
+  void _itemClick(User user) async {}
 
   void swapSearchViewVisibility() => _appSearchView?.swapVisibility();
 
@@ -203,6 +200,6 @@ class _AdminListPageState extends State<AdminListPage> {
   void dispose() {
     super.dispose();
     _scrollController.dispose();
-    listAdminBloc?.dispose();
+    listUserBloc?.dispose();
   }
 }

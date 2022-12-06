@@ -1,5 +1,8 @@
+import 'package:cafeysadmin/config/admin_manager.dart';
 import 'package:cafeysadmin/custom_views/app_button_view.dart';
+import 'package:cafeysadmin/custom_views/app_title_view.dart';
 import 'package:cafeysadmin/util/app_colors.dart';
+import 'package:cafeysadmin/util/app_constants.dart';
 import 'package:cafeysadmin/util/app_space.dart';
 import 'package:cafeysadmin/util/app_strings.dart';
 import 'package:flutter/material.dart';
@@ -100,6 +103,26 @@ class AppWidget {
       backgroundColor: AppColors.white,
       onRefresh: onRefresh,
       child: child,
+    );
+  }
+
+  static AppBar helloAdminAppBar() {
+    return AppBar(
+      title: FutureBuilder(
+        initialData: null,
+        future: AdminManager.getAdmin(),
+        builder: (context, snapshot) {
+          if (snapshot.data == null) {
+            return const AppTitleView(text: AppStrings.empty);
+          }
+
+          return AppTitleView(
+            color: AppColors.white,
+            text: "${AppStrings.hello}${AppStrings.comma} ${snapshot.data!.name!}",
+            textSize: AppConstants.VALUE_20,
+          );
+        },
+      ),
     );
   }
 }
