@@ -36,6 +36,9 @@ class AppStrings {
   static const String passwordAreNotEquals = "Senhas divergentes";
   static const String registeredUsersList = "Lista de Usuários";
   static const String registeredAdminList = "Lista de Administradores";
+  static const String invalidDate = "Data invalida";
+  static const String selectAccessStartDate = "Início do acesso";
+  static const String selectAccessEndDate = "Fim do acesso";
 
   static String errorMessagePasswordFieldLength(int value) {
     return "Senha deve conter mínimo de $value caracteres";

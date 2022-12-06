@@ -57,6 +57,7 @@ class AppConstants {
   static const double VALUE_270 = 270;
   static const double VALUE_280 = 280;
   static const double VALUE_300 = 300;
+  static const double VALUE_365 = 365;
   static const double VALUE_500 = 500;
   static const double VALUE_600 = 600;
   static const double VALUE_700 = 700;

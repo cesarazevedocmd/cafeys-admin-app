@@ -28,7 +28,7 @@ class AppToast {
         icon = const Icon(Icons.check_circle, color: AppColors.white);
         break;
       case AppToastType.error:
-        color = AppColors.red;
+        color = AppColors.secondary;
         icon = const Icon(Icons.error, color: AppColors.white);
         break;
     }

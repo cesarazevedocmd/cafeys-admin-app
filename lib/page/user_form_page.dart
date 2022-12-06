@@ -1,13 +1,9 @@
 import 'package:cafeysadmin/config/nav.dart';
 import 'package:cafeysadmin/custom_views/app_button_view.dart';
-import 'package:cafeysadmin/custom_views/app_drop_down_view.dart';
+import 'package:cafeysadmin/custom_views/app_date_picker_view.dart';
 import 'package:cafeysadmin/custom_views/app_text_field_view.dart';
-import 'package:cafeysadmin/model/admin.dart';
-import 'package:cafeysadmin/model/admin_dto.dart';
-import 'package:cafeysadmin/model/enums/access_type.dart';
 import 'package:cafeysadmin/model/user.dart';
 import 'package:cafeysadmin/model/user_dto.dart';
-import 'package:cafeysadmin/repository/blocs/admin/save_admin_bloc.dart';
 import 'package:cafeysadmin/repository/blocs/bloc_response.dart';
 import 'package:cafeysadmin/repository/blocs/user/save_user_bloc.dart';
 import 'package:cafeysadmin/util/app_constants.dart';
@@ -36,6 +32,8 @@ class _UserFormPageState extends State<UserFormPage> {
   TextEditingController controllerPasswordConfirmation = TextEditingController();
   bool visiblePassword = false;
   bool visiblePasswordConfirmation = false;
+  DateTime? accessStart;
+  DateTime? accessEnd;
 
   @override
   Widget build(BuildContext context) {
@@ -115,6 +113,30 @@ class _UserFormPageState extends State<UserFormPage> {
           enable: widget.user == null,
         ),
         AppSpace.vertical(AppConstants.VALUE_10),
+        AppDatePickerView(
+          dateWhenOpenDialog: DateTime.now(),
+          initialValue: accessStart,
+          firstDate: DateTime.now(),
+          lastDate: DateTime.now().add(Duration(days: AppConstants.VALUE_365.toInt())),
+          hintSelectDate: AppStrings.selectAccessStartDate,
+          removeButtonText: AppStrings.selectAccessStartDate,
+          onSelectedDate: (DateTime? selectedDate) {
+            accessStart = selectedDate;
+          },
+        ),
+        AppSpace.vertical(AppConstants.VALUE_10),
+        AppDatePickerView(
+          dateWhenOpenDialog: DateTime.now(),
+          initialValue: accessEnd,
+          firstDate: DateTime.now(),
+          lastDate: DateTime.now().add(Duration(days: AppConstants.VALUE_365.toInt())),
+          hintSelectDate: AppStrings.selectAccessEndDate,
+          removeButtonText: AppStrings.selectAccessEndDate,
+          onSelectedDate: (DateTime? selectedDate) {
+            accessEnd = selectedDate;
+          },
+        ),
+        AppSpace.vertical(AppConstants.VALUE_10),
       ],
     );
   }
@@ -155,6 +177,8 @@ class _UserFormPageState extends State<UserFormPage> {
     if (user != null && !loadedFields) {
       controllerName.text = user.name!;
       controllerEmail.text = user.email!;
+      accessStart = user.accessStart;
+      accessEnd = user.accessEnd;
       loadedFields = true;
     }
   }
@@ -167,17 +191,14 @@ class _UserFormPageState extends State<UserFormPage> {
 
     AppWidget.showProgressDialog(context);
 
-    String name = controllerName.text;
-    String email = controllerEmail.text;
-    String password = controllerPassword.text;
-    String passwordConfirmation = controllerPasswordConfirmation.text;
-
     var dto = UserDTO(
       id: widget.user?.id,
-      name: name,
-      email: email,
-      password: password,
-      passwordConfirm: passwordConfirmation,
+      name: controllerName.text,
+      email: controllerEmail.text,
+      password: controllerPassword.text,
+      passwordConfirm: controllerPasswordConfirmation.text,
+      accessStart: accessStart,
+      accessEnd: accessEnd,
     );
 
     var bloc = SaveUserBloc();
