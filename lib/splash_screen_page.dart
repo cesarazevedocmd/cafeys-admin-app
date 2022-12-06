@@ -1,7 +1,7 @@
 import 'package:cafeysadmin/config/admin_manager.dart';
 import 'package:cafeysadmin/config/nav.dart';
-import 'package:cafeysadmin/home_page.dart';
 import 'package:cafeysadmin/model/auth_admin.dart';
+import 'package:cafeysadmin/page/home_page.dart';
 import 'package:cafeysadmin/page/login_page.dart';
 import 'package:cafeysadmin/repository/blocs/auth/auth_bloc.dart';
 import 'package:cafeysadmin/repository/blocs/bloc_response.dart';
@@ -99,6 +99,7 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
         if (mounted) {
           AppToast.error(context, result.error ?? AppStrings.blocResponseGenericError);
         }
+        _openLoginScreen(email);
         break;
       case BlocResponseStatus.success:
         await AdminManager.setAdmin(result.data);

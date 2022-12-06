@@ -33,6 +33,10 @@ class AppStrings {
 
   static const String comma = ",";
 
+  static const String tryAgain = "Tentar novamente";
+
+  static const String searchUser = "Pesquisar usuário";
+
   static const String manageAdminUsersLabel = "Usuários Administradores";
 
   static const String manageAdminUsersDescription = "Gerencie os usuários admistradores do sistema";
