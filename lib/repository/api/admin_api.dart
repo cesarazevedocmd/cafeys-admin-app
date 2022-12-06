@@ -138,19 +138,20 @@ class AdminApi {
     String query = "",
     Status? status,
   }) async {
-    var paramsRequest = <String, dynamic>{};
-    paramsRequest["page"] = "$page";
-    paramsRequest["size"] = "$size";
-    paramsRequest["query"] = query;
-    paramsRequest["status"] = status?.value;
+    var paramsRequest = <String, dynamic>{
+      "page": "$page",
+      "size": "$size",
+      "query": query,
+      "status": status?.value,
+    };
 
     RequestResult result = await Repository.getRequest(ApiAdmin.list, params: paramsRequest);
 
     switch (result.status) {
       case RequestResultStatus.success:
         var jsonResult = json.decode(result.jsonData ?? "{}") as Map<String, dynamic>;
-        List<Admin> admins = jsonResult["items"]?.map<Admin>((e) => Admin.fromJson(e)).toList() ?? [];
-        var pagination = CustomPaginationResponse.fromJson(jsonResult, admins);
+        List<Admin> items = jsonResult["items"]?.map<Admin>((e) => Admin.fromJson(e)).toList() ?? [];
+        var pagination = CustomPaginationResponse.fromJson(jsonResult, items);
         return ApiResponse.success(pagination);
       case RequestResultStatus.error:
         return ApiResponse.error(result.error?.error);
