@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:cafeysadmin/model/status.dart';
 import 'package:cafeysadmin/model/user.dart';
 import 'package:cafeysadmin/model/user_dto.dart';
 import 'package:cafeysadmin/repository/api/api_response.dart';
@@ -22,15 +23,17 @@ class UserApi {
     }
   }
 
-  static Future<ApiResponse<CustomPaginationResponse<User>>> listUsers({
+  static Future<ApiResponse<CustomPaginationResponse<User>>> list({
     required int page,
     required int size,
     String query = "",
+    Status? status,
   }) async {
     var paramsRequest = <String, dynamic>{};
     paramsRequest["page"] = "$page";
     paramsRequest["size"] = "$size";
     paramsRequest["query"] = query;
+    paramsRequest["status"] = status?.value;
 
     RequestResult result = await Repository.getRequest(ApiUser.list, params: paramsRequest);
 

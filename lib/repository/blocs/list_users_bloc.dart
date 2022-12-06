@@ -21,7 +21,7 @@ class ListUsersBloc extends BasicBloc<BlocResponse<CustomPaginationResponse<User
       if (connected) {
         add(BlocResponse.loading());
 
-        var response = await UserApi.listUsers(page: _requestPage, size: _requestPage * 20, query: query);
+        var response = await UserApi.list(page: _requestPage, size: _requestPage * 20, query: query);
 
         if (response.success) {
           _requestPage += 1;

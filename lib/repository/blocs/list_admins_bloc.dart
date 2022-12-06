@@ -21,7 +21,7 @@ class ListAdminsBloc extends BasicBloc<BlocResponse<CustomPaginationResponse<Adm
       if (connected) {
         add(BlocResponse.loading());
 
-        var response = await AdminApi.listAdmins(page: _requestPage, size: _requestPage * 20, query: query);
+        var response = await AdminApi.list(page: _requestPage, size: _requestPage * 20, query: query);
 
         if (response.success) {
           _requestPage += 1;
