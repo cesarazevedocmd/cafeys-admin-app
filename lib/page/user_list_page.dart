@@ -1,6 +1,8 @@
+import 'package:cafeysadmin/config/nav.dart';
 import 'package:cafeysadmin/custom_views/app_search_view.dart';
 import 'package:cafeysadmin/custom_views/user_list_item_card_view.dart';
 import 'package:cafeysadmin/model/user.dart';
+import 'package:cafeysadmin/page/user_form_page.dart';
 import 'package:cafeysadmin/repository/blocs/bloc_response.dart';
 import 'package:cafeysadmin/repository/blocs/user/list_user_bloc.dart';
 import 'package:cafeysadmin/repository/pagination_response.dart';
@@ -130,13 +132,19 @@ class _UserListPageState extends State<UserListPage> {
   Widget build(BuildContext context) {
     initAppSearchView();
     return Scaffold(
-      appBar: AppWidget.helloAdminAppBar(),
+      appBar: AppBar(
+        title: const Text(AppStrings.registeredUsersList),
+      ),
       body: Column(
         children: [
           _appSearchView!,
           Expanded(child: _getContent()),
           _loadingMoreView(),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => openUserForm(),
+        child: const Icon(Icons.person_add_outlined),
       ),
     );
   }
@@ -192,9 +200,18 @@ class _UserListPageState extends State<UserListPage> {
     return AppWidget.empty();
   }
 
-  void _itemClick(User user) async {}
+  void _itemClick(User user) {
+    openUserForm(user: user);
+  }
 
   void swapSearchViewVisibility() => _appSearchView?.swapVisibility();
+
+  openUserForm({User? user}) async {
+    var pushResult = await push(context, UserFormPage(user: user));
+    if (pushResult != null && pushResult == true) {
+      _fetch();
+    }
+  }
 
   @override
   void dispose() {

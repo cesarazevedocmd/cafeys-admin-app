@@ -132,7 +132,9 @@ class _AdminListPageState extends State<AdminListPage> {
   Widget build(BuildContext context) {
     initAppSearchView();
     return Scaffold(
-      appBar: AppWidget.helloAdminAppBar(),
+      appBar: AppBar(
+        title: const Text(AppStrings.registeredAdminList),
+      ),
       body: Column(
         children: [
           _appSearchView!,
@@ -204,17 +206,17 @@ class _AdminListPageState extends State<AdminListPage> {
 
   void swapSearchViewVisibility() => _appSearchView?.swapVisibility();
 
-  @override
-  void dispose() {
-    super.dispose();
-    _scrollController.dispose();
-    listAdminBloc?.dispose();
-  }
-
   openAdminForm({Admin? admin}) async {
     var pushResult = await push(context, AdminFormPage(admin: admin));
     if (pushResult != null && pushResult == true) {
       _fetch();
     }
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _scrollController.dispose();
+    listAdminBloc?.dispose();
   }
 }

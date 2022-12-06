@@ -34,6 +34,8 @@ class AppStrings {
   static const String manageBasicUsersLabel = "Usuários Cafeys App";
   static const String manageBasicUsersDescription = "Gerencie os usuários que tem acesso ao Aplicativo de medição";
   static const String passwordAreNotEquals = "Senhas divergentes";
+  static const String registeredUsersList = "Lista de Usuários";
+  static const String registeredAdminList = "Lista de Administradores";
 
   static String errorMessagePasswordFieldLength(int value) {
     return "Senha deve conter mínimo de $value caracteres";
