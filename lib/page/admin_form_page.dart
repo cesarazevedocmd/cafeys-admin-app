@@ -49,7 +49,7 @@ class _AdminFormPageState extends State<AdminFormPage> {
           padding: const EdgeInsets.only(left: AppConstants.VALUE_16, right: AppConstants.VALUE_16),
           child: ListView(
             children: [
-              AppSpace.vertical(MediaQuery.of(context).size.height / AppConstants.VALUE_8.toInt()),
+              AppSpace.vertical(MediaQuery.of(context).size.height / AppConstants.VALUE_15.toInt()),
               fieldsByAuthenticatedUser(),
               AppSpace.vertical(AppConstants.VALUE_60),
               saveButton(),
