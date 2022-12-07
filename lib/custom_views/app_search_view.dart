@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:cafeysadmin/custom_views/app_text_field_view.dart';
+import 'package:cafeysadmin/util/app_constants.dart';
 import 'package:cafeysadmin/util/app_line.dart';
 import 'package:cafeysadmin/util/app_space.dart';
 import 'package:cafeysadmin/util/app_strings.dart';
@@ -55,6 +56,7 @@ class _AppSearchViewState extends State<AppSearchView> {
                         onSubmit: (_) => widget.okClick(),
                         actionEnterClick: TextInputAction.done,
                         borderType: AppTextFieldBorderType.none,
+                        maxLines: AppConstants.VALUE_1.toInt(),
                         suffixIcon: IconButton(
                           onPressed: () => widget.clearClick(),
                           icon: const Icon(CupertinoIcons.clear),

@@ -1,3 +1,4 @@
+import 'package:cafeysadmin/custom_views/app_subtitle_view.dart';
 import 'package:cafeysadmin/custom_views/app_title_view.dart';
 import 'package:cafeysadmin/model/user.dart';
 import 'package:cafeysadmin/util/app_assets.dart';
@@ -44,6 +45,11 @@ class UserListItemCardView extends StatelessWidget {
                   children: [
                     AppTitleView(
                       text: item.name ?? AppStrings.empty,
+                      maxLines: AppConstants.VALUE_3.toInt(),
+                    ),
+                    AppSpace.vertical(AppConstants.VALUE_5),
+                    AppSubtitleView(
+                      text: item.email ?? AppStrings.empty,
                       maxLines: AppConstants.VALUE_3.toInt(),
                     ),
                   ],

@@ -68,17 +68,22 @@ class AppWidget {
   }
 
   static Widget error(
-      String imageAsset, {
-        VoidCallback? onClick,
-        String onClickText = "notFoundText",
-        Color background = AppColors.white,
-        String? description,
-      }) {
+    String imageAsset, {
+    VoidCallback? onClick,
+    String onClickText = "notFoundText",
+    Color background = AppColors.white,
+    String? description,
+  }) {
     if (onClick == null) throw Exception("onClick can't be null");
 
     Widget button = AppButtonView(text: onClickText, onClick: onClick);
 
-    List<Widget> customView = [Image.asset(imageAsset, height: AppConstants.VALUE_250)];
+    List<Widget> customView = [
+      Opacity(
+        opacity: AppConstants.VALUE_0_5,
+        child: Image.asset(imageAsset, height: AppConstants.VALUE_250),
+      ),
+    ];
     if (description != null && description.isNotEmpty) {
       customView.add(AppSpace.vertical(AppConstants.VALUE_20));
       customView.add(
