@@ -28,40 +28,12 @@ class AppFirebaseRemoteConfig {
     return host;
   }
 
-  static String? getHostTestUrl() {
-    String host = _remoteConfig.getString("hostTestApi");
-    if (host.isEmpty || (!host.startsWith("http://") && !host.startsWith("https://"))) return null;
-    return host;
-  }
-
   static String getHostPublicValue() {
     return _remoteConfig.getString("hostPublicValue");
   }
 
-  static String getSupportEmail() {
-    return _remoteConfig.getString("supportEmail");
-  }
-
-  static String getSupportWhatsApp() {
-    return _remoteConfig.getString("supportWhatsApp");
-  }
-
-  static String? getPrivacyPolicyUrl() {
-    String termsAndPolicies = _remoteConfig.getString("privacyPolicyUrl");
-    if (termsAndPolicies.isEmpty ||
-        (!termsAndPolicies.startsWith("http://") && !termsAndPolicies.startsWith("https://"))) return null;
-    return termsAndPolicies;
-  }
-
-  static String? getTermsOfUseUrl() {
-    String termsAndPolicies = _remoteConfig.getString("termsOfUseUrl");
-    if (termsAndPolicies.isEmpty ||
-        (!termsAndPolicies.startsWith("http://") && !termsAndPolicies.startsWith("https://"))) return null;
-    return termsAndPolicies;
-  }
-
   static final Map<String, dynamic> _defaultConfigs = <String, dynamic>{
-    "hostApi": "https://api-hmg.mmsolucaotextil.com.br:8080/api-dev",
-    "hostPublicValue": "@t54/34Mt3",
+    "hostApi": "http://192.168.1.9:8080/api",
+    "hostPublicValue": "",
   };
 }

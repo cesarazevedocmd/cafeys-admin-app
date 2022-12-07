@@ -1,8 +1,10 @@
 import 'package:cafeysadmin/config/admin_manager.dart';
+import 'package:cafeysadmin/config/app_firebase_remote_config.dart';
 import 'package:cafeysadmin/config/nav.dart';
 import 'package:cafeysadmin/model/auth_admin.dart';
 import 'package:cafeysadmin/page/home_page.dart';
 import 'package:cafeysadmin/page/login_page.dart';
+import 'package:cafeysadmin/repository/api/apis.dart';
 import 'package:cafeysadmin/repository/blocs/auth/auth_bloc.dart';
 import 'package:cafeysadmin/repository/blocs/bloc_response.dart';
 import 'package:cafeysadmin/util/app_assets.dart';
@@ -27,20 +29,20 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
   @override
   void initState() {
     super.initState();
-    initValidation();
+    AppFirebaseRemoteConfig.initRemoteConfig().then((value) => initValidation());
   }
 
   void initValidation() {
     Future.wait([
       AdminManager.getEmail(),
       AdminManager.getPassword(),
-      //AppFirebaseRemoteConfig.fetch(),
+      AppFirebaseRemoteConfig.fetch(),
     ]).then(
       (values) {
-        String? email = values[0];
-        String? password = values[1];
-        //Api.host = AppFirebaseRemoteConfig.getHostUrl() ?? AppStrings.empty;
-        //Api.hostPublicValue = AppFirebaseRemoteConfig.getHostPublicValue();
+        String email = values[0];
+        String password = values[1];
+        Api.host = AppFirebaseRemoteConfig.getHostUrl() ?? AppStrings.empty;
+        Api.hostPublicValue = AppFirebaseRemoteConfig.getHostPublicValue();
         if (email.isNotEmpty && password.isNotEmpty) {
           _performLogin(email, password);
         } else {
