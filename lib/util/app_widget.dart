@@ -1,5 +1,6 @@
 import 'package:cafeysadmin/config/admin_manager.dart';
 import 'package:cafeysadmin/custom_views/app_button_view.dart';
+import 'package:cafeysadmin/custom_views/app_subtitle_view.dart';
 import 'package:cafeysadmin/custom_views/app_title_view.dart';
 import 'package:cafeysadmin/util/app_colors.dart';
 import 'package:cafeysadmin/util/app_constants.dart';
@@ -67,27 +68,42 @@ class AppWidget {
   }
 
   static Widget error(
-    String imageAsset, {
-    VoidCallback? onClick,
-    String onClickText = "notFoundText",
-    Color background = AppColors.white,
-  }) {
+      String imageAsset, {
+        VoidCallback? onClick,
+        String onClickText = "notFoundText",
+        Color background = AppColors.white,
+        String? description,
+      }) {
     if (onClick == null) throw Exception("onClick can't be null");
 
     Widget button = AppButtonView(text: onClickText, onClick: onClick);
 
-    return Container(
-      decoration: BoxDecoration(
-        color: background,
-        image: DecorationImage(
-          alignment: Alignment.center,
-          image: AssetImage(imageAsset),
+    List<Widget> customView = [Image.asset(imageAsset, height: AppConstants.VALUE_250)];
+    if (description != null && description.isNotEmpty) {
+      customView.add(AppSpace.vertical(AppConstants.VALUE_20));
+      customView.add(
+        AppSubtitleView(
+          maxLines: AppConstants.VALUE_2.toInt(),
+          align: TextAlign.center,
+          color: AppColors.primary,
+          italic: true,
+          text: description,
         ),
-      ),
+      );
+    }
+
+    Column rowCustomView = Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: customView,
+    );
+
+    return SizedBox(
+      width: double.infinity,
       child: Stack(
         alignment: Alignment.center,
         children: [
-          Positioned(bottom: 80, child: button),
+          rowCustomView,
+          Positioned(bottom: AppConstants.VALUE_80, child: button),
         ],
       ),
     );

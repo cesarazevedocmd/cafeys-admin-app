@@ -174,9 +174,10 @@ class _UserListPageState extends State<UserListPage> {
 
     if (_items.isEmpty) {
       return AppWidget.error(
-        AppAssets.eyebrowBanner(),
+        AppAssets.itemsNotFound(),
         onClickText: AppStrings.tryAgain,
         onClick: _fetch,
+        description: AppStrings.noItemsFound,
       );
     }
 

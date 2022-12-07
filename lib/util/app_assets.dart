@@ -3,6 +3,10 @@ class AppAssets {
     return "assets/images/forbidden.svg";
   }
 
+  static String itemsNotFound() {
+    return "assets/images/items_not_found.png";
+  }
+
   static String error404() {
     return "assets/images/error.png";
   }

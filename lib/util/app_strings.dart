@@ -26,6 +26,7 @@ class AppStrings {
   static const String updateUser = "Atualizar Usuário";
   static const String addUser = "Novo Usuário";
   static const String tryAgain = "Tentar novamente";
+  static const String noItemsFound = "Nenhum item encontrado";
   static const String itemsNotFound = "Nenhum ítem encontrado";
   static const String searchUser = "Pesquisar usuário";
   static const String selectAccessType = "Selecione o tipo de acesso";
