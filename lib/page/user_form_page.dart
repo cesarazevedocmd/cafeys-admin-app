@@ -7,6 +7,7 @@ import 'package:cafeysadmin/model/user_dto.dart';
 import 'package:cafeysadmin/repository/blocs/bloc_response.dart';
 import 'package:cafeysadmin/repository/blocs/user/save_user_bloc.dart';
 import 'package:cafeysadmin/util/app_constants.dart';
+import 'package:cafeysadmin/util/app_functions.dart';
 import 'package:cafeysadmin/util/app_space.dart';
 import 'package:cafeysadmin/util/app_strings.dart';
 import 'package:cafeysadmin/util/app_toast.dart';
@@ -61,6 +62,7 @@ class _UserFormPageState extends State<UserFormPage> {
   }
 
   Widget fieldsByAuthenticatedUser() {
+    var startDateToAccessEnd = (accessStart ?? AppFunctions.now()).add(Duration(days: AppConstants.VALUE_1.toInt()));
     return Column(
       children: [
         AppTextFieldView(
@@ -114,22 +116,25 @@ class _UserFormPageState extends State<UserFormPage> {
         ),
         AppSpace.vertical(AppConstants.VALUE_10),
         AppDatePickerView(
-          dateWhenOpenDialog: DateTime.now(),
+          dateWhenOpenDialog: AppFunctions.now(),
           initialValue: accessStart,
-          firstDate: DateTime.now(),
-          lastDate: DateTime.now().add(Duration(days: AppConstants.VALUE_365.toInt())),
+          firstDate: AppFunctions.now(),
+          lastDate: AppFunctions.now().add(Duration(days: AppConstants.VALUE_365.toInt())),
           hintSelectDate: AppStrings.selectAccessStartDate,
           removeButtonText: AppStrings.selectAccessStartDate,
           onSelectedDate: (DateTime? selectedDate) {
-            accessStart = selectedDate;
+            setState(() {
+              accessStart = selectedDate;
+              accessEnd = null;
+            });
           },
         ),
         AppSpace.vertical(AppConstants.VALUE_10),
         AppDatePickerView(
-          dateWhenOpenDialog: DateTime.now(),
+          dateWhenOpenDialog: startDateToAccessEnd,
           initialValue: accessEnd,
-          firstDate: DateTime.now(),
-          lastDate: DateTime.now().add(Duration(days: AppConstants.VALUE_365.toInt())),
+          firstDate: startDateToAccessEnd,
+          lastDate: startDateToAccessEnd.add(Duration(days: AppConstants.VALUE_365.toInt())),
           hintSelectDate: AppStrings.selectAccessEndDate,
           removeButtonText: AppStrings.selectAccessEndDate,
           onSelectedDate: (DateTime? selectedDate) {

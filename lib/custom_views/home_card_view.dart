@@ -1,5 +1,6 @@
 import 'package:cafeysadmin/custom_views/app_subtitle_view.dart';
 import 'package:cafeysadmin/custom_views/app_title_view.dart';
+import 'package:cafeysadmin/util/app_colors.dart';
 import 'package:cafeysadmin/util/app_constants.dart';
 import 'package:cafeysadmin/util/app_space.dart';
 import 'package:flutter/material.dart';
@@ -51,6 +52,7 @@ class HomeCardView extends StatelessWidget {
                     AppSubtitleView(
                       text: subtitle,
                       maxLines: AppConstants.VALUE_3.toInt(),
+                      color: AppColors.black.withOpacity(AppConstants.VALUE_0_7),
                     ),
                   ],
                 ),
