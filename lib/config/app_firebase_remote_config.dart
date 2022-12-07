@@ -60,13 +60,8 @@ class AppFirebaseRemoteConfig {
     return termsAndPolicies;
   }
 
-  static Map<String, dynamic> _defaultConfigs = <String, dynamic>{
+  static final Map<String, dynamic> _defaultConfigs = <String, dynamic>{
     "hostApi": "https://api-hmg.mmsolucaotextil.com.br:8080/api-dev",
     "hostPublicValue": "@t54/34Mt3",
-    "hostTestApi": "https://api-hmg.mmsolucaotextil.com.br:8080/api-dev",
-    "supportEmail": "mmsolucaotextil@gmail.com",
-    "supportWhatsApp": "62999999999",
-    "privacyPolicyUrl": "https://mm-textil.s3.amazonaws.com/privacy-policy.pdf",
-    "termsOfUseUrl": "https://mm-textil.s3.amazonaws.com/terms-of-use.pdf",
   };
 }
