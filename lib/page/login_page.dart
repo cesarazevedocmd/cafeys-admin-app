@@ -88,7 +88,6 @@ class _LoginPageState extends State<LoginPage> {
         if (mounted) AppToast.error(context, result.error ?? AppStrings.blocResponseGenericError);
         break;
       case BlocResponseStatus.success:
-        await AdminManager.setAdmin(result.data);
         if (mounted) _openHomeScreen();
         break;
     }
