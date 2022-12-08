@@ -7,6 +7,7 @@ class AppButtonView extends StatelessWidget {
   final TextStyle? textStyle;
   final AppButtonType type;
   final ButtonStyle? buttonStyle;
+  final Icon? icon;
 
   const AppButtonView({
     required this.text,
@@ -14,6 +15,7 @@ class AppButtonView extends StatelessWidget {
     this.type = AppButtonType.primary,
     this.textStyle,
     this.buttonStyle,
+    this.icon,
     Key? key,
   }) : super(key: key);
 
@@ -29,9 +31,31 @@ class AppButtonView extends StatelessWidget {
 
     switch (type) {
       case AppButtonType.primary:
-        return ElevatedButton(onPressed: onClick, style: safeButtonStyle, child: Text(text, style: textStyle));
+        {
+          if (icon == null) {
+            return ElevatedButton(onPressed: onClick, style: safeButtonStyle, child: Text(text, style: textStyle));
+          } else {
+            return ElevatedButton.icon(
+              onPressed: onClick,
+              style: safeButtonStyle,
+              icon: icon!,
+              label: Text(text, style: textStyle),
+            );
+          }
+        }
       case AppButtonType.secondary:
-        return OutlinedButton(onPressed: onClick, style: safeButtonStyle, child: Text(text, style: textStyle));
+        {
+          if (icon == null) {
+            return OutlinedButton(onPressed: onClick, style: safeButtonStyle, child: Text(text, style: textStyle));
+          } else {
+            return OutlinedButton.icon(
+              onPressed: onClick,
+              style: safeButtonStyle,
+              icon: icon!,
+              label: Text(text, style: textStyle),
+            );
+          }
+        }
     }
   }
 }

@@ -1,12 +1,15 @@
 import 'package:cafeysadmin/config/nav.dart';
 import 'package:cafeysadmin/custom_views/app_button_view.dart';
 import 'package:cafeysadmin/custom_views/app_date_picker_view.dart';
+import 'package:cafeysadmin/custom_views/app_subtitle_view.dart';
 import 'package:cafeysadmin/custom_views/app_text_field_view.dart';
 import 'package:cafeysadmin/custom_views/app_title_view.dart';
+import 'package:cafeysadmin/model/remove_user_dto.dart';
 import 'package:cafeysadmin/model/status.dart';
 import 'package:cafeysadmin/model/user.dart';
 import 'package:cafeysadmin/model/user_dto.dart';
 import 'package:cafeysadmin/repository/blocs/bloc_response.dart';
+import 'package:cafeysadmin/repository/blocs/user/remove_user_permanently_bloc.dart';
 import 'package:cafeysadmin/repository/blocs/user/save_user_bloc.dart';
 import 'package:cafeysadmin/util/app_colors.dart';
 import 'package:cafeysadmin/util/app_constants.dart';
@@ -58,6 +61,8 @@ class _UserFormPageState extends State<UserFormPage> {
               fieldsByAuthenticatedUser(),
               AppSpace.vertical(AppConstants.VALUE_20),
               saveButton(),
+              AppSpace.vertical(AppConstants.VALUE_10),
+              removeButton(),
             ],
           ),
         ),
@@ -175,18 +180,6 @@ class _UserFormPageState extends State<UserFormPage> {
           ),
           onTap: () => setState(() => selectedStatus = Status.inactive),
         ),
-        ListTile(
-          title: Text(Status.deleted.name),
-          leading: Radio<Status>(
-            value: Status.deleted,
-            groupValue: selectedStatus,
-            onChanged: (Status? value) {
-              setState(() => selectedStatus = value ?? Status.deleted);
-            },
-          ),
-          onTap: () => setState(() => selectedStatus = Status.deleted),
-        ),
-        AppSpace.vertical(AppConstants.VALUE_10),
       ],
     );
   }
@@ -210,6 +203,27 @@ class _UserFormPageState extends State<UserFormPage> {
             textStyle: const TextStyle(fontSize: AppConstants.VALUE_18),
             onClick: () => onLoginButtonClick(),
             type: AppButtonType.primary,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget removeButton() {
+    if (widget.user == null) return AppWidget.empty();
+
+    return Row(
+      children: [
+        Expanded(
+          child: AppButtonView(
+            text: AppStrings.deleteUser,
+            textStyle: const TextStyle(fontSize: AppConstants.VALUE_18, color: AppColors.darkRed),
+            onClick: () => onRemovePermanentlyButtonClick(),
+            type: AppButtonType.secondary,
+            icon: const Icon(
+              Icons.person_remove,
+              color: AppColors.darkRed,
+            ),
           ),
         ),
       ],
@@ -263,6 +277,86 @@ class _UserFormPageState extends State<UserFormPage> {
         break;
       case BlocResponseStatus.success:
         if (mounted) pop(context, result: true);
+        break;
+    }
+  }
+
+  Future<void> onRemovePermanentlyButtonClick() async {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          icon: const Icon(Icons.person_remove),
+          title: const AppTitleView(
+            text: AppStrings.deleteUser,
+            color: AppColors.black,
+          ),
+          content: AppSubtitleView(
+            text: AppStrings.wouldYouLikeToRemoveThisUserPermanently(widget.user?.email ?? AppStrings.empty),
+            color: AppColors.black,
+            maxLines: AppConstants.VALUE_5.toInt(),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => pop(context),
+              child: const Text(
+                AppStrings.cancel,
+                style: TextStyle(color: AppColors.black),
+              ),
+            ),
+            TextButton(
+              onPressed: () {
+                pop(context);
+                removePermanently();
+              },
+              child: const Text(
+                AppStrings.remove,
+                style: TextStyle(color: AppColors.darkRed),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> removePermanently() async {
+    bool formOK = _formKey.currentState?.validate() ?? false;
+    if (!formOK) {
+      return;
+    }
+
+    AppWidget.showProgressDialog(context);
+
+    var dto = RemoveUserDTO(
+      id: widget.user?.id,
+      email: widget.user?.email,
+    );
+
+    var bloc = RemoveUserPermanentlyBloc();
+    var result = await bloc.fetch(dto: dto);
+    bloc.dispose();
+
+    // Removing ProgressDialog from the stack
+    if (mounted) pop(context);
+
+    switch (result.status) {
+      case BlocResponseStatus.unknown:
+        break;
+      case BlocResponseStatus.loading:
+        break;
+      case BlocResponseStatus.error:
+        if (mounted) AppToast.error(context, result.error ?? AppStrings.blocResponseGenericError);
+        break;
+      case BlocResponseStatus.success:
+        if (mounted) {
+          if (result.data == true) {
+            pop(context, result: true);
+          } else {
+            AppToast.error(context, result.error ?? AppStrings.blocResponseGenericError);
+          }
+        }
         break;
     }
   }

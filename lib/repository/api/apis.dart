@@ -27,6 +27,7 @@ class ApiUser {
   static const String path = "/user";
   static const String activeUser = "$path/active-user";
   static const String deleteUser = "$path/delete-user";
+  static const String removeUser = "$path/remove-user";
   static const String inactiveUser = "$path/inactive-user";
   static const String userInfo = "$path/user-info";
   static const String list = "$path/list";

@@ -6,7 +6,7 @@ class AppStrings {
   static const String empty = "";
   static const String statusNotFound = "Status não identificado";
   static const String noConnected = "Sem conexão";
-  static const String requestFailed = "Requisição Falhou";
+  static const String requestFailed = "Requisição falhou";
   static const String loginLabel = "Login";
   static const String passwordLabel = "Senha";
   static const String passwordConfirmationLabel = "Confirmação";
@@ -19,6 +19,8 @@ class AppStrings {
   static const String comma = ",";
   static const String nameLabel = "Nome";
   static const String emailLabel = "Email";
+  static const String cancel = "Cancelar";
+  static const String remove = "Remover";
   static const String updateButtonLabel = "Atualizar";
   static const String addButtonLabel = "Cadastrar";
   static const String updateAdmin = "Atualizar Administrador";
@@ -40,9 +42,15 @@ class AppStrings {
   static const String invalidDate = "Data invalida";
   static const String selectAccessStartDate = "Início do acesso";
   static const String selectAccessEndDate = "Fim do acesso";
-  static const String userSituation = "Situação";
+  static const String userSituation = "Status";
+  static const String deleteUser = "Remover Usuário";
+  static const String userNotRemovedTryAgain = "Usuário não foi removido, tente novamente";
 
   static String errorMessagePasswordFieldLength(int value) {
     return "Senha deve conter mínimo de $value caracteres";
+  }
+
+  static String wouldYouLikeToRemoveThisUserPermanently(String email) {
+    return "Deseja remover o usuário '$email' de forma permanente?";
   }
 }

@@ -91,11 +91,13 @@ class Repository {
 
       if (params != null) queryParamsString = "?${Uri(queryParameters: params).query}";
 
+      String bodyEncoded = json.encode(body);
+
       Uri uri = Uri.parse("${Api.host}$url$queryParamsString");
 
       var header = await _getHeader(sendToken);
 
-      http.Response response = await http.delete(uri, headers: header, body: body);
+      http.Response response = await http.delete(uri, headers: header, body: bodyEncoded);
 
       _printRequest(uri, response);
 

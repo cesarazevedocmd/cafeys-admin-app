@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:cafeysadmin/model/remove_user_dto.dart';
 import 'package:cafeysadmin/model/status.dart';
 import 'package:cafeysadmin/model/user.dart';
 import 'package:cafeysadmin/model/user_dto.dart';
@@ -35,6 +36,20 @@ class UserApi {
         return ApiResponse.success(user);
       case RequestResultStatus.error:
         return ApiResponse.error(result.error?.error ?? AppStrings.requestFailed);
+      default:
+        return ApiResponse.error(AppStrings.statusNotFound);
+    }
+  }
+
+  static Future<ApiResponse<bool>> removePermanently({required RemoveUserDTO dto}) async {
+    RequestResult result = await Repository.deleteRequest(ApiUser.removeUser, body: dto.toJson());
+
+    switch (result.status) {
+      case RequestResultStatus.success:
+        bool jsonResult = json.decode(result.jsonData!);
+        return ApiResponse.success(jsonResult);
+      case RequestResultStatus.error:
+        return ApiResponse.error(result.error?.error);
       default:
         return ApiResponse.error(AppStrings.statusNotFound);
     }
