@@ -20,7 +20,7 @@ class HomeApp extends StatelessWidget {
     return MaterialApp(
       title: AppStrings.appLabel,
       theme: ThemeData(primarySwatch: AppColors.materialColor(AppColors.primary)),
-      home: const SafeArea(child: SplashScreenPage()),
+      home: const SplashScreenPage(),
     );
   }
 }
