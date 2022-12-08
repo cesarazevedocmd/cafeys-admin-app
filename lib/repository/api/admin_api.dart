@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:cafeysadmin/model/admin.dart';
 import 'package:cafeysadmin/model/admin_dto.dart';
+import 'package:cafeysadmin/model/remove_admin_dto.dart';
 import 'package:cafeysadmin/model/status.dart';
 import 'package:cafeysadmin/repository/api/api_response.dart';
 import 'package:cafeysadmin/repository/api/apis.dart';
@@ -20,6 +21,20 @@ class AdminApi {
         return ApiResponse.success(admin);
       case RequestResultStatus.error:
         return ApiResponse.error(result.error?.error ?? AppStrings.requestFailed);
+      default:
+        return ApiResponse.error(AppStrings.statusNotFound);
+    }
+  }
+
+  static Future<ApiResponse<bool>> removePermanently({required RemoveAdminDTO dto}) async {
+    RequestResult result = await Repository.deleteRequest(ApiAdmin.removeAdmin, body: dto.toJson());
+
+    switch (result.status) {
+      case RequestResultStatus.success:
+        bool jsonResult = json.decode(result.jsonData!);
+        return ApiResponse.success(jsonResult);
+      case RequestResultStatus.error:
+        return ApiResponse.error(result.error?.error);
       default:
         return ApiResponse.error(AppStrings.statusNotFound);
     }
@@ -119,7 +134,7 @@ class AdminApi {
       "firebaseToken": firebaseToken,
     };
 
-    RequestResult result = await Repository.putRequest(ApiUser.setFirebaseToken, params: paramsRequest);
+    RequestResult result = await Repository.putRequest(ApiAdmin.setFirebaseToken, params: paramsRequest);
 
     switch (result.status) {
       case RequestResultStatus.success:

@@ -44,6 +44,7 @@ class AppStrings {
   static const String selectAccessEndDate = "Fim do acesso";
   static const String userSituation = "Status";
   static const String deleteUser = "Remover Usuário";
+  static const String deleteAdmin = "Remover Administrador";
   static const String userNotRemovedTryAgain = "Usuário não foi removido, tente novamente";
 
   static String errorMessagePasswordFieldLength(int value) {
@@ -52,5 +53,9 @@ class AppStrings {
 
   static String wouldYouLikeToRemoveThisUserPermanently(String email) {
     return "Deseja remover o usuário '$email' de forma permanente?";
+  }
+
+  static String wouldYouLikeToRemoveThisAdminPermanently(String email) {
+    return "Deseja remover o administrador '$email' de forma permanente?";
   }
 }

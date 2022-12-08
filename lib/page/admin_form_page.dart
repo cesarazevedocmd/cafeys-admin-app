@@ -1,12 +1,17 @@
 import 'package:cafeysadmin/config/nav.dart';
 import 'package:cafeysadmin/custom_views/app_button_view.dart';
 import 'package:cafeysadmin/custom_views/app_drop_down_view.dart';
+import 'package:cafeysadmin/custom_views/app_subtitle_view.dart';
 import 'package:cafeysadmin/custom_views/app_text_field_view.dart';
+import 'package:cafeysadmin/custom_views/app_title_view.dart';
 import 'package:cafeysadmin/model/admin.dart';
 import 'package:cafeysadmin/model/admin_dto.dart';
 import 'package:cafeysadmin/model/enums/access_type.dart';
+import 'package:cafeysadmin/model/remove_admin_dto.dart';
+import 'package:cafeysadmin/repository/blocs/admin/remove_admin_permanently_bloc.dart';
 import 'package:cafeysadmin/repository/blocs/admin/save_admin_bloc.dart';
 import 'package:cafeysadmin/repository/blocs/bloc_response.dart';
+import 'package:cafeysadmin/util/app_colors.dart';
 import 'package:cafeysadmin/util/app_constants.dart';
 import 'package:cafeysadmin/util/app_space.dart';
 import 'package:cafeysadmin/util/app_strings.dart';
@@ -50,9 +55,11 @@ class _AdminFormPageState extends State<AdminFormPage> {
           child: ListView(
             children: [
               AppSpace.vertical(AppConstants.VALUE_10),
-              fieldsByAuthenticatedUser(),
+              fieldsByAuthenticatedAdmin(),
               AppSpace.vertical(AppConstants.VALUE_60),
               saveButton(),
+              AppSpace.vertical(AppConstants.VALUE_10),
+              removeButton(),
             ],
           ),
         ),
@@ -60,7 +67,7 @@ class _AdminFormPageState extends State<AdminFormPage> {
     );
   }
 
-  Widget fieldsByAuthenticatedUser() {
+  Widget fieldsByAuthenticatedAdmin() {
     return Column(
       children: [
         AppTextFieldView(
@@ -151,6 +158,27 @@ class _AdminFormPageState extends State<AdminFormPage> {
     );
   }
 
+  Widget removeButton() {
+    if (widget.admin == null) return AppWidget.empty();
+
+    return Row(
+      children: [
+        Expanded(
+          child: AppButtonView(
+            text: AppStrings.deleteUser,
+            textStyle: const TextStyle(fontSize: AppConstants.VALUE_18, color: AppColors.darkRed),
+            onClick: () => onRemovePermanentlyButtonClick(),
+            type: AppButtonType.secondary,
+            icon: const Icon(
+              Icons.person_remove,
+              color: AppColors.darkRed,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
   void loadFields(Admin? admin) {
     if (admin != null && !loadedFields) {
       controllerName.text = admin.name!;
@@ -204,6 +232,86 @@ class _AdminFormPageState extends State<AdminFormPage> {
         break;
       case BlocResponseStatus.success:
         if (mounted) pop(context, result: true);
+        break;
+    }
+  }
+
+  Future<void> onRemovePermanentlyButtonClick() async {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          icon: const Icon(Icons.person_remove),
+          title: const AppTitleView(
+            text: AppStrings.deleteAdmin,
+            color: AppColors.black,
+          ),
+          content: AppSubtitleView(
+            text: AppStrings.wouldYouLikeToRemoveThisAdminPermanently(widget.admin?.email ?? AppStrings.empty),
+            color: AppColors.black,
+            maxLines: AppConstants.VALUE_5.toInt(),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => pop(context),
+              child: const Text(
+                AppStrings.cancel,
+                style: TextStyle(color: AppColors.black),
+              ),
+            ),
+            TextButton(
+              onPressed: () {
+                pop(context);
+                removePermanently();
+              },
+              child: const Text(
+                AppStrings.remove,
+                style: TextStyle(color: AppColors.darkRed),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> removePermanently() async {
+    bool formOK = _formKey.currentState?.validate() ?? false;
+    if (!formOK) {
+      return;
+    }
+
+    AppWidget.showProgressDialog(context);
+
+    var dto = RemoveAdminDTO(
+      id: widget.admin?.id,
+      email: widget.admin?.email,
+    );
+
+    var bloc = RemoveAdminPermanentlyBloc();
+    var result = await bloc.fetch(dto: dto);
+    bloc.dispose();
+
+    // Removing ProgressDialog from the stack
+    if (mounted) pop(context);
+
+    switch (result.status) {
+      case BlocResponseStatus.unknown:
+        break;
+      case BlocResponseStatus.loading:
+        break;
+      case BlocResponseStatus.error:
+        if (mounted) AppToast.error(context, result.error ?? AppStrings.blocResponseGenericError);
+        break;
+      case BlocResponseStatus.success:
+        if (mounted) {
+          if (result.data == true) {
+            pop(context, result: true);
+          } else {
+            AppToast.error(context, result.error ?? AppStrings.blocResponseGenericError);
+          }
+        }
         break;
     }
   }

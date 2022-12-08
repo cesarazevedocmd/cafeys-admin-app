@@ -15,6 +15,7 @@ class ApiAdmin {
   static const String path = "/admin";
   static const String activeAdmin = "$path/active-admin";
   static const String deleteAdmin = "$path/delete-admin";
+  static const String removeAdmin = "$path/remove-admin";
   static const String inactiveAdmin = "$path/inactive-admin";
   static const String adminInfo = "$path/admin-info";
   static const String list = "$path/list";
