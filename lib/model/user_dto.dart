@@ -1,3 +1,4 @@
+import 'package:cafeysadmin/model/status.dart';
 import 'package:cafeysadmin/repository/interface/entity.dart';
 
 class UserDTO extends Entity {
@@ -8,6 +9,7 @@ class UserDTO extends Entity {
   String? passwordConfirm;
   DateTime? accessStart;
   DateTime? accessEnd;
+  Status? status;
 
   UserDTO({
     this.id,
@@ -17,6 +19,7 @@ class UserDTO extends Entity {
     this.passwordConfirm,
     this.accessStart,
     this.accessEnd,
+    this.status,
   });
 
   UserDTO.fromJson(Map<String, dynamic> json) {
@@ -27,6 +30,7 @@ class UserDTO extends Entity {
     passwordConfirm = json['passwordConfirm'];
     accessStart = json['accessStart'] != null ? DateTime.tryParse(json['accessStart']) : null;
     accessEnd = json['accessEnd'] != null ? DateTime.tryParse(json['accessEnd']) : null;
+    status = statusByValue(json["status"]);
   }
 
   @override
@@ -39,6 +43,7 @@ class UserDTO extends Entity {
     data['passwordConfirm'] = passwordConfirm;
     data['accessStart'] = accessStart?.toIso8601String();
     data['accessEnd'] = accessEnd?.toIso8601String();
+    data["status"] = status?.value;
     return data;
   }
 }

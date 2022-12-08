@@ -49,7 +49,7 @@ class _AdminFormPageState extends State<AdminFormPage> {
           padding: const EdgeInsets.only(left: AppConstants.VALUE_16, right: AppConstants.VALUE_16),
           child: ListView(
             children: [
-              AppSpace.vertical(MediaQuery.of(context).size.height / AppConstants.VALUE_15.toInt()),
+              AppSpace.vertical(AppConstants.VALUE_10),
               fieldsByAuthenticatedUser(),
               AppSpace.vertical(AppConstants.VALUE_60),
               saveButton(),
@@ -145,13 +145,6 @@ class _AdminFormPageState extends State<AdminFormPage> {
             textStyle: const TextStyle(fontSize: AppConstants.VALUE_18),
             onClick: () => onLoginButtonClick(),
             type: AppButtonType.primary,
-            buttonStyle: ButtonStyle(
-              shape: MaterialStateProperty.all(
-                RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(AppConstants.VALUE_8),
-                ),
-              ),
-            ),
           ),
         ),
       ],

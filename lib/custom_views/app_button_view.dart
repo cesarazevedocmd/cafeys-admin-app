@@ -1,3 +1,4 @@
+import 'package:cafeysadmin/util/app_constants.dart';
 import 'package:flutter/material.dart';
 
 class AppButtonView extends StatelessWidget {
@@ -18,11 +19,19 @@ class AppButtonView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var safeButtonStyle = buttonStyle ??
+        ButtonStyle(
+          shape: MaterialStateProperty.all(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(AppConstants.VALUE_8),
+            ),
+          ),
+        );
     switch (type) {
       case AppButtonType.primary:
-        return ElevatedButton(onPressed: onClick, child: Text(text, style: textStyle), style: buttonStyle);
+        return ElevatedButton(onPressed: onClick, style: safeButtonStyle, child: Text(text, style: textStyle));
       case AppButtonType.secondary:
-        return OutlinedButton(onPressed: onClick, child: Text(text, style: textStyle), style: buttonStyle);
+        return OutlinedButton(onPressed: onClick, style: safeButtonStyle, child: Text(text, style: textStyle));
     }
   }
 }

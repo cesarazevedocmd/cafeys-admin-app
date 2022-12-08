@@ -2,10 +2,13 @@ import 'package:cafeysadmin/config/nav.dart';
 import 'package:cafeysadmin/custom_views/app_button_view.dart';
 import 'package:cafeysadmin/custom_views/app_date_picker_view.dart';
 import 'package:cafeysadmin/custom_views/app_text_field_view.dart';
+import 'package:cafeysadmin/custom_views/app_title_view.dart';
+import 'package:cafeysadmin/model/status.dart';
 import 'package:cafeysadmin/model/user.dart';
 import 'package:cafeysadmin/model/user_dto.dart';
 import 'package:cafeysadmin/repository/blocs/bloc_response.dart';
 import 'package:cafeysadmin/repository/blocs/user/save_user_bloc.dart';
+import 'package:cafeysadmin/util/app_colors.dart';
 import 'package:cafeysadmin/util/app_constants.dart';
 import 'package:cafeysadmin/util/app_functions.dart';
 import 'package:cafeysadmin/util/app_space.dart';
@@ -31,6 +34,7 @@ class _UserFormPageState extends State<UserFormPage> {
   TextEditingController controllerEmail = TextEditingController();
   TextEditingController controllerPassword = TextEditingController();
   TextEditingController controllerPasswordConfirmation = TextEditingController();
+  Status selectedStatus = Status.active;
   bool visiblePassword = false;
   bool visiblePasswordConfirmation = false;
   DateTime? accessStart;
@@ -50,9 +54,9 @@ class _UserFormPageState extends State<UserFormPage> {
           padding: const EdgeInsets.only(left: AppConstants.VALUE_16, right: AppConstants.VALUE_16),
           child: ListView(
             children: [
-              AppSpace.vertical(MediaQuery.of(context).size.height / AppConstants.VALUE_15.toInt()),
+              AppSpace.vertical(AppConstants.VALUE_10),
               fieldsByAuthenticatedUser(),
-              AppSpace.vertical(AppConstants.VALUE_60),
+              AppSpace.vertical(AppConstants.VALUE_20),
               saveButton(),
             ],
           ),
@@ -64,6 +68,7 @@ class _UserFormPageState extends State<UserFormPage> {
   Widget fieldsByAuthenticatedUser() {
     var startDateToAccessEnd = (accessStart ?? AppFunctions.now()).add(Duration(days: AppConstants.VALUE_1.toInt()));
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         AppTextFieldView(
           controller: controllerName,
@@ -142,6 +147,43 @@ class _UserFormPageState extends State<UserFormPage> {
           },
         ),
         AppSpace.vertical(AppConstants.VALUE_10),
+        const AppTitleView(
+          text: AppStrings.userSituation,
+          color: AppColors.black,
+          bold: false,
+          textSize: AppConstants.VALUE_16,
+        ),
+        ListTile(
+          title: Text(Status.active.name),
+          leading: Radio<Status>(
+            value: Status.active,
+            groupValue: selectedStatus,
+            onChanged: (Status? value) {
+              setState(() => selectedStatus = value ?? Status.active);
+            },
+          ),
+        ),
+        ListTile(
+          title: Text(Status.inactive.name),
+          leading: Radio<Status>(
+            value: Status.inactive,
+            groupValue: selectedStatus,
+            onChanged: (Status? value) {
+              setState(() => selectedStatus = value ?? Status.inactive);
+            },
+          ),
+        ),
+        ListTile(
+          title: Text(Status.deleted.name),
+          leading: Radio<Status>(
+            value: Status.deleted,
+            groupValue: selectedStatus,
+            onChanged: (Status? value) {
+              setState(() => selectedStatus = value ?? Status.deleted);
+            },
+          ),
+        ),
+        AppSpace.vertical(AppConstants.VALUE_10),
       ],
     );
   }
@@ -165,13 +207,6 @@ class _UserFormPageState extends State<UserFormPage> {
             textStyle: const TextStyle(fontSize: AppConstants.VALUE_18),
             onClick: () => onLoginButtonClick(),
             type: AppButtonType.primary,
-            buttonStyle: ButtonStyle(
-              shape: MaterialStateProperty.all(
-                RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(AppConstants.VALUE_8),
-                ),
-              ),
-            ),
           ),
         ),
       ],
@@ -185,6 +220,7 @@ class _UserFormPageState extends State<UserFormPage> {
       accessStart = user.accessStart;
       accessEnd = user.accessEnd;
       loadedFields = true;
+      selectedStatus = user.status ?? Status.active;
     }
   }
 
@@ -204,6 +240,7 @@ class _UserFormPageState extends State<UserFormPage> {
       passwordConfirm: controllerPasswordConfirmation.text,
       accessStart: accessStart,
       accessEnd: accessEnd,
+      status: selectedStatus,
     );
 
     var bloc = SaveUserBloc();

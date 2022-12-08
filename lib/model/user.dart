@@ -1,3 +1,4 @@
+import 'package:cafeysadmin/model/status.dart';
 import 'package:cafeysadmin/repository/interface/entity.dart';
 
 class User extends Entity {
@@ -6,6 +7,7 @@ class User extends Entity {
   String? email;
   DateTime? accessStart;
   DateTime? accessEnd;
+  Status? status;
 
   User({
     this.id,
@@ -13,6 +15,7 @@ class User extends Entity {
     this.email,
     this.accessStart,
     this.accessEnd,
+    this.status,
   });
 
   User.fromJson(Map<String, dynamic> json) {
@@ -21,6 +24,7 @@ class User extends Entity {
     email = json['email'];
     accessStart = json['accessStart'] != null ? DateTime.tryParse(json['accessStart']) : null;
     accessEnd = json['accessEnd'] != null ? DateTime.tryParse(json['accessEnd']) : null;
+    status = statusByValue(json["status"]);
   }
 
   @override
@@ -31,6 +35,7 @@ class User extends Entity {
     data['email'] = email;
     data['accessStart'] = accessStart?.toIso8601String();
     data['accessEnd'] = accessEnd?.toIso8601String();
+    data["status"] = status?.value;
     return data;
   }
 }

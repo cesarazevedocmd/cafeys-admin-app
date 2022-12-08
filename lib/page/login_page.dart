@@ -157,13 +157,6 @@ class _LoginPageState extends State<LoginPage> {
             textStyle: const TextStyle(fontSize: AppConstants.VALUE_18),
             onClick: () => onLoginButtonClick(),
             type: AppButtonType.primary,
-            buttonStyle: ButtonStyle(
-              shape: MaterialStateProperty.all(
-                RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(AppConstants.VALUE_8),
-                ),
-              ),
-            ),
           ),
         ),
       ],

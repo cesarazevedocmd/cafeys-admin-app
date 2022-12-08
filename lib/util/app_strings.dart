@@ -40,6 +40,7 @@ class AppStrings {
   static const String invalidDate = "Data invalida";
   static const String selectAccessStartDate = "Início do acesso";
   static const String selectAccessEndDate = "Fim do acesso";
+  static const String userSituation = "Situação";
 
   static String errorMessagePasswordFieldLength(int value) {
     return "Senha deve conter mínimo de $value caracteres";
