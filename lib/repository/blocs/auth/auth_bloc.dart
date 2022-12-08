@@ -24,8 +24,8 @@ class AuthBloc extends BasicBloc<BlocResponse<Admin>> {
           String token = response.data!.token!;
           Admin admin = response.data!.admin!;
 
-          await AdminManager.setToken(token);
           await AdminManager.setAdmin(admin);
+          await AdminManager.setToken(token);
           await AdminManager.setPassword(login.password);
           await validateFirebaseToken(admin);
 

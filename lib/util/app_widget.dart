@@ -127,7 +127,7 @@ class AppWidget {
     );
   }
 
-  static AppBar helloAdminAppBar() {
+  static AppBar helloAdminAppBar({List<Widget> actions = const []}) {
     return AppBar(
       title: FutureBuilder(
         initialData: null,
@@ -136,7 +136,6 @@ class AppWidget {
           if (snapshot.data == null) {
             return const AppTitleView(text: AppStrings.empty);
           }
-
           return AppTitleView(
             color: AppColors.white,
             text: "${AppStrings.hello}${AppStrings.comma} ${snapshot.data!.name!}",
@@ -144,6 +143,7 @@ class AppWidget {
           );
         },
       ),
+      actions: actions,
     );
   }
 }

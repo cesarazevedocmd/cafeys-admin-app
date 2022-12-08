@@ -165,7 +165,7 @@ class _AdminFormPageState extends State<AdminFormPage> {
       children: [
         Expanded(
           child: AppButtonView(
-            text: AppStrings.deleteUser,
+            text: AppStrings.deleteAdmin,
             textStyle: const TextStyle(fontSize: AppConstants.VALUE_18, color: AppColors.darkRed),
             onClick: () => onRemovePermanentlyButtonClick(),
             type: AppButtonType.secondary,

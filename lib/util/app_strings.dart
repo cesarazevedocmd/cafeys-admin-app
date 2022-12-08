@@ -21,6 +21,7 @@ class AppStrings {
   static const String emailLabel = "Email";
   static const String cancel = "Cancelar";
   static const String remove = "Remover";
+  static const String logout = "Sair";
   static const String updateButtonLabel = "Atualizar";
   static const String addButtonLabel = "Cadastrar";
   static const String updateAdmin = "Atualizar Administrador";
@@ -46,6 +47,7 @@ class AppStrings {
   static const String deleteUser = "Remover Usuário";
   static const String deleteAdmin = "Remover Administrador";
   static const String userNotRemovedTryAgain = "Usuário não foi removido, tente novamente";
+  static const String wouldYouLikeToLogoutQuestion = "Deseja realmente sair do App?";
 
   static String errorMessagePasswordFieldLength(int value) {
     return "Senha deve conter mínimo de $value caracteres";
