@@ -162,6 +162,7 @@ class _UserFormPageState extends State<UserFormPage> {
               setState(() => selectedStatus = value ?? Status.active);
             },
           ),
+          onTap: () => setState(() => selectedStatus = Status.active),
         ),
         ListTile(
           title: Text(Status.inactive.name),
@@ -172,6 +173,7 @@ class _UserFormPageState extends State<UserFormPage> {
               setState(() => selectedStatus = value ?? Status.inactive);
             },
           ),
+          onTap: () => setState(() => selectedStatus = Status.inactive),
         ),
         ListTile(
           title: Text(Status.deleted.name),
@@ -182,6 +184,7 @@ class _UserFormPageState extends State<UserFormPage> {
               setState(() => selectedStatus = value ?? Status.deleted);
             },
           ),
+          onTap: () => setState(() => selectedStatus = Status.deleted),
         ),
         AppSpace.vertical(AppConstants.VALUE_10),
       ],

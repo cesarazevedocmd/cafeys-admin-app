@@ -19,14 +19,14 @@ class AppButtonView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var safeButtonStyle = buttonStyle ??
-        ButtonStyle(
-          shape: MaterialStateProperty.all(
-            RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(AppConstants.VALUE_8),
-            ),
-          ),
-        );
+    var defaultShape = MaterialStateProperty.all(
+      RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(AppConstants.VALUE_8),
+      ),
+    );
+
+    var safeButtonStyle = buttonStyle?.copyWith(shape: defaultShape) ?? ButtonStyle(shape: defaultShape);
+
     switch (type) {
       case AppButtonType.primary:
         return ElevatedButton(onPressed: onClick, style: safeButtonStyle, child: Text(text, style: textStyle));
