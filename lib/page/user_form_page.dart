@@ -72,6 +72,10 @@ class _UserFormPageState extends State<UserFormPage> {
 
   Widget fieldsByAuthenticatedUser() {
     var startDateToAccessEnd = (accessStart ?? AppFunctions.now()).add(Duration(days: AppConstants.VALUE_1.toInt()));
+    DateTime safeInitialDateToAccessStart = AppFunctions.now();
+    if (widget.user?.accessStart?.isBefore(AppFunctions.now()) == true) {
+      safeInitialDateToAccessStart = widget.user!.accessStart!;
+    }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -128,7 +132,7 @@ class _UserFormPageState extends State<UserFormPage> {
         AppDatePickerView(
           dateWhenOpenDialog: accessStart ?? AppFunctions.now(),
           initialValue: accessStart,
-          firstDate: widget.user?.accessStart ?? AppFunctions.now(),
+          firstDate: safeInitialDateToAccessStart,
           lastDate: AppFunctions.now().add(Duration(days: AppConstants.VALUE_365.toInt())),
           useFirstDateWhenInitialDateIsOutOfRange: true,
           hintSelectDate: AppStrings.selectAccessStartDate,
