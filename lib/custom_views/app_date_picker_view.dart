@@ -12,6 +12,7 @@ class AppDatePickerView extends StatefulWidget {
   final DateTime firstDate;
   final DateTime lastDate;
   final DateTime? dateWhenOpenDialog;
+  final bool useFirstDateWhenInitialDateIsOutOfRange;
 
   AppDatePickerView({
     required this.hintSelectDate,
@@ -21,6 +22,7 @@ class AppDatePickerView extends StatefulWidget {
     required this.lastDate,
     this.initialValue,
     this.dateWhenOpenDialog,
+    this.useFirstDateWhenInitialDateIsOutOfRange = false,
     Key? key,
   }) : super(key: key);
 
@@ -91,7 +93,13 @@ class _AppDatePickerViewState extends State<AppDatePickerView> {
     if (initialDate != null) {
       var maxLastDate = widget.lastDate.add(const Duration(days: 1));
       var outOfTheRange = (initialDate.isBefore(widget.firstDate) || initialDate.isAfter(maxLastDate));
-      if (outOfTheRange) initialDate = widget.lastDate;
+      if (outOfTheRange) {
+        if (widget.useFirstDateWhenInitialDateIsOutOfRange) {
+          initialDate = widget.firstDate;
+        } else {
+          initialDate = widget.lastDate;
+        }
+      }
     } else {
       initialDate ??= widget.dateWhenOpenDialog ?? widget.lastDate;
     }
