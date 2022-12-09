@@ -18,7 +18,7 @@ class AppStrings {
   static const String hello = "Olá";
   static const String comma = ",";
   static const String nameLabel = "Nome";
-  static const String emailLabel = "Email";
+  static const String emailLabel = "E-mail";
   static const String cancel = "Cancelar";
   static const String remove = "Remover";
   static const String logout = "Sair";
