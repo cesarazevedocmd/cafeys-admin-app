@@ -125,6 +125,7 @@ class _LoginPageState extends State<LoginPage> {
           controller: controllerLogin,
           borderType: AppTextFieldBorderType.bottom,
           label: AppStrings.loginLabel,
+          inputType: TextInputType.emailAddress,
           validator: AppValidation.validatorEmptyField,
         ),
         AppSpace.vertical(AppConstants.VALUE_10),

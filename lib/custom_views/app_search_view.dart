@@ -57,6 +57,7 @@ class _AppSearchViewState extends State<AppSearchView> {
                         actionEnterClick: TextInputAction.done,
                         borderType: AppTextFieldBorderType.none,
                         maxLines: AppConstants.VALUE_1.toInt(),
+                        inputType: TextInputType.name,
                         suffixIcon: IconButton(
                           onPressed: () => widget.clearClick(),
                           icon: const Icon(CupertinoIcons.clear),
