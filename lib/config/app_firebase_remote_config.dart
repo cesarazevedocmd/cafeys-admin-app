@@ -17,7 +17,12 @@ class AppFirebaseRemoteConfig {
   }
 
   static Future fetch() async {
-    await _remoteConfig.fetchAndActivate();
+    var result = await _remoteConfig.fetchAndActivate();
+    if (result == false) {
+      await _remoteConfig.fetch();
+      return await _remoteConfig.activate();
+    }
+    return result;
   }
 
   static String? getHostUrl() {
